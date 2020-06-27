@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:response/response.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -6,6 +7,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var response = ResponseUI.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,8 +16,23 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
       ),
       body: Center(
-        child: Text('Hello')
-      ),
+          child: Column(
+        children: <Widget>[
+          Container(
+              height: response.setHeight(200),
+              width: response.setWidth(400),
+              color: Colors.blue,
+              child: Text(
+                  'Hello',
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700))
+          ),
+          SizedBox(height: response.setHeight(10)),
+          Icon(
+            Icons.email,
+            size: response.setFontSize(20),
+          )
+        ],
+      )),
     );
   }
 }
