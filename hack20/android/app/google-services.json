@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "543107689638",
+    "firebase_url": "https://hack20-d5c70.firebaseio.com",
+    "project_id": "hack20-d5c70",
+    "storage_bucket": "hack20-d5c70.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543107689638:android:77ec80e29f8a006a6cd867",
+        "android_client_info": {
+          "package_name": "com.hack20.foodpick"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "543107689638-v47nl5dmeguh5bjec9mbh3o1jumum4a5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN5NyugyoK6F6RflPc4ZLa_nmM8akFRPc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "543107689638-v47nl5dmeguh5bjec9mbh3o1jumum4a5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
