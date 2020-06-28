@@ -1,6 +1,8 @@
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hack20/screens/ngoScreen/ngoAvailableFood.dart';
+import 'package:hack20/screens/ngoScreen/ngoFoodHistory.dart';
 import 'package:hack20/services/auth.dart';
 
 class NgoScreen extends StatefulWidget {
@@ -37,14 +39,8 @@ class _NgoScreenState extends State<NgoScreen> {
             )
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(Icons.add, color: Colors.black),
-          backgroundColor: Colors.white,
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         bottomNavigationBar: BubbleBottomBar(
-            hasNotch: true,
+            hasNotch: false,
             fabLocation: BubbleBottomBarFabLocation.end,
             opacity: 0.2,
             currentIndex: currentIndex,
@@ -90,21 +86,17 @@ class _NgoScreenState extends State<NgoScreen> {
               )
             ]
         ),
-        body: _PageChange()
+        body: _pageChange()
     );
   }
 
-  _PageChange() {
+  _pageChange() {
     switch (currentIndex) {
       case 0:
-        return Container(
-            child: Center(child: Text('Home Screen'))
-        );
+        return NGOAvailableFood();
         break;
       case 1:
-        return Container(
-            child: Center(child: Text('History'))
-        );
+        return NGOFoodHistory();
         break;
       case 2:
         return Container(
