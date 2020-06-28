@@ -193,11 +193,11 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                               Random rnd = Random();
                               DateTime defaultBestBefore = DateTime.now().add(Duration(hours: 24));
                               var count = await DatabaseService().getFoodCount();
-                              DatabaseService().setFoodData(
+                              await DatabaseService().setFoodData(
                                   'food' + '${count['count']}'.padLeft(4, '0'), productName, user.email,
                                   rnd.nextInt(10), Timestamp.now(), Timestamp.fromDate(defaultBestBefore), true, false, '', url
                               );
-                              DatabaseService().updateFoodCount(count['count'] + 1);
+                              await DatabaseService().updateFoodCount(count['count'] + 1);
                             }),
                       ],
                     ),
