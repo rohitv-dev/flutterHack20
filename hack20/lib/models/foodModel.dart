@@ -4,6 +4,8 @@ class Food {
   final String id;
   final String name;
   final String email;
+  final double latitude;
+  final double longitude;
   final int quantity;
   final Timestamp notifiedTime;
   final Timestamp bestBeforeTime;
@@ -16,6 +18,8 @@ class Food {
     this.id,
     this.name,
     this.email,
+    this.latitude,
+    this.longitude,
     this.quantity,
     this.notifiedTime,
     this.bestBeforeTime,
