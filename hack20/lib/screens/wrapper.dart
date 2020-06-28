@@ -19,8 +19,10 @@ class Wrapper extends StatelessWidget {
         future: checkLoginRole(user.email),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.data == 'useraccess') return HomeScreen();
-            if (snapshot.data == 'ngoaccess') return NgoScreen();
+            if (snapshot.hasData) {
+              if (snapshot.data == 'useraccess') return HomeScreen();
+              if (snapshot.data == 'ngoaccess') return NgoScreen();
+            } else {return Container();}
           } else {return Container();}
         }
       );
