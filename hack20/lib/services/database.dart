@@ -1,14 +1,58 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hack20/models/foodModel.dart';
+import 'package:hack20/models/sharedModel.dart';
+import 'package:hack20/models/userModel.dart';
 
 class DatabaseService {
+  final String uid;
   final String email;
   final String ngoName;
 
-  DatabaseService({this.email, this.ngoName});
+  DatabaseService({this.uid, this.email, this.ngoName});
 
   final CollectionReference _foodCollection = Firestore.instance.collection('food');
   final CollectionReference _counterCollection = Firestore.instance.collection('counter');
+  final CollectionReference _usersNgosCollection = Firestore.instance.collection('usersNgos');
+
+  Future setAddressData(String docName, String doorNo, String floorNo, String address, String city, String pinCode, double lat, double lon) async {
+    return await _usersNgosCollection.document(uid).collection('address').document('address').setData({
+      'name': docName,
+      'doorNo': doorNo,
+      'floorNo': floorNo,
+      'addressLine': address,
+      'city': city,
+      'pinCode': pinCode,
+      'latitude': lat,
+      'longitude': lon,
+    });
+  }
+
+  Future updateAddressData(String docName, String doorNo, String floorNo, String address, String city, String pinCode, double lat, double lon) async {
+    return await _usersNgosCollection.document(uid).collection('address').document('address').updateData({
+      'name': docName,
+      'doorNo': doorNo,
+      'floorNo': floorNo,
+      'addressLine': address,
+      'city': city,
+      'pinCode': pinCode,
+      'latitude': lat,
+      'longitude': lon,
+    });
+  }
+
+
+  UserNGOAddress _userAddressFromSnapshot(DocumentSnapshot snapshot) {
+    return UserNGOAddress(
+      name: snapshot.data['name'] ?? '',
+      doorNo: snapshot.data['doorNo'] ?? '',
+      floorNo: snapshot.data['floorNo'] ?? '',
+      addressLine: snapshot.data['addressLine'] ?? '',
+      city: snapshot.data['city'] ?? '',
+      pinCode: snapshot.data['pincode'] ?? '',
+      latitude: snapshot.data['latitude'] ?? 12.837605,
+      longitude: snapshot.data['longitude'] ?? 80.205146,
+    );
+  }
 
   Future updateFoodCount(int count) async {
     return await _counterCollection.document('foodId').setData({'count': count });
@@ -65,5 +109,9 @@ class DatabaseService {
 
   Stream<List<Food>> get ngoFoodHistory {
     return _foodCollection.where('pickedBy', isEqualTo: ngoName).snapshots().map(_foodListFromSnapshot);
+  }
+
+  Stream<UserNGOAddress> get userNgosAddressData {
+    return _usersNgosCollection.document(uid).collection('address').document('address').snapshots().map(_userAddressFromSnapshot);
   }
 }
