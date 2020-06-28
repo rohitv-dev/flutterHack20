@@ -14,9 +14,11 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final response = ResponseUI.instance;
   final AuthService _auth = AuthService();
-  final _formKey = GlobalKey<FormState>();
+  String warningText = '';
   String error = '';
   bool loading = false;
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   String email = '';
   String password = '';
@@ -32,7 +34,7 @@ class _SignInState extends State<SignIn> {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      height: 400,
+                      height: response.setHeight(270.0),
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage('assets/background.png'),
@@ -40,46 +42,17 @@ class _SignInState extends State<SignIn> {
                       child: Stack(
                         children: <Widget>[
                           Positioned(
-                            left: 30,
-                            width: 80,
-                            height: 200,
                             child: Container(
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage('assets/light-1.png'))),
-                            ),
-                          ),
-                          Positioned(
-                            left: 140,
-                            width: 80,
-                            height: 150,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage('assets/light-2.png'))),
-                            ),
-                          ),
-                          Positioned(
-                            right: 40,
-                            top: 40,
-                            width: 80,
-                            height: 150,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage('assets/clock.png'))),
-                            ),
-                          ),
-                          Positioned(
-                            child: Container(
-                              margin: EdgeInsets.only(top: 50),
+                              margin: EdgeInsets.only(top: response.setHeight(10)),
                               child: Center(
                                 child: Text(
                                   "Login",
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 40,
-                                      fontWeight: FontWeight.bold),
+                                      fontSize: response.setFontSize(39.0),
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: response.setFontSize(2.0)
+                                  ),
                                 ),
                               ),
                             ),
@@ -88,77 +61,100 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(30.0),
+                      padding: EdgeInsets.all(response.setFontSize(28.0)),
                       child: Column(
                         children: <Widget>[
                           Container(
-                            padding: EdgeInsets.all(5),
+                            padding: EdgeInsets.all(response.setFontSize(5.0)),
                             decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(response.setFontSize(10.0)),
                                 boxShadow: [
                                   BoxShadow(
-                                      color: Color.fromRGBO(143, 148, 251, .2),
-                                      blurRadius: 20.0,
+                                      color: Color.fromRGBO(99, 107, 255, .2),
+                                      blurRadius: response.setFontSize(20.0),
                                       offset: Offset(0, 10))
                                 ]),
                             child: Column(
                               children: <Widget>[
                                 Container(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(response.setFontSize(8.0)),
                                   decoration: BoxDecoration(
                                       border: Border(
                                           bottom: BorderSide(
-                                              color: Colors.grey[100]))),
+                                              color: Colors.grey[300]))),
                                   child: TextField(
+                                    controller: emailController,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        hintText: "Email or Phone number",
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey[400])),
+                                        hintText: "Email",
+                                        hintStyle: TextStyle(color: Colors.grey[500])),
                                   ),
                                 ),
                                 Container(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(response.setFontSize(8.0)),
                                   child: TextField(
+                                    controller: passwordController,
+                                    obscureText: true,
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintText: "Password",
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey[400])),
+                                        hintStyle: TextStyle(color: Colors.grey[500])),
                                   ),
                                 )
                               ],
                             ),
                           ),
                           SizedBox(
-                            height: 30,
+                            height: response.setHeight(30.0),
                           ),
                           Container(
-                            height: 50,
+                            height: response.setHeight(46.0),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(response.setFontSize(10.0)),
                                 gradient: LinearGradient(colors: [
-                                  Color.fromRGBO(143, 148, 251, 1),
-                                  Color.fromRGBO(143, 148, 251, .6),
+                                  Color.fromRGBO(99, 107, 255, 1),
+                                  Color.fromRGBO(130, 136, 255, 0.9),
                                 ])),
                             child: Center(
-                              child: Text(
-                                "Login",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                              child: FlatButton(
+                                child: Text(
+                                  "Login",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                onPressed: () async {
+                                  email = emailController.text.replaceAll(' ', '');
+                                  password = passwordController.text.replaceAll(' ', '');
+                                  setState(() {
+                                    loading = true;
+                                  });
+                                  dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+                                  if (result == null) {
+                                    setState(() {
+                                      loading = false;
+                                      warningText = 'Could not sign in with those credentials';
+                                    });
+                                  }
+                                },
+                              )
                             ),
                           ),
-                          SizedBox(
-                            height: 70,
+                          SizedBox(height: response.setHeight(20.0)),
+                          Container(
+                            child: GestureDetector(
+                              child: Text('Not yet an user? Register now!',
+                                  style: TextStyle(color: Color.fromRGBO(90, 100, 251, 1), fontSize: response.setFontSize(18.0), decoration: TextDecoration.underline)),
+                              onTap: () {
+                                widget.toggleView();
+                              },
+                            )
                           ),
-                          Text(
-                            "Forgot Password?",
-                            style: TextStyle(
-                                color: Color.fromRGBO(143, 148, 251, 1)),
-                          ),
+                          SizedBox(height: response.setHeight(20.0)),
+                          Container(
+                            child: Text(warningText, style: TextStyle(color: Color.fromRGBO(90, 100, 251, 1), fontSize: response.setFontSize(15.0)))
+                          )
                         ],
                       ),
                     )
