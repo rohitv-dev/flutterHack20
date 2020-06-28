@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hack20/homePage.dart';
+import 'package:hack20/models/userModel.dart';
+import 'package:hack20/services/auth.dart';
+import 'package:provider/provider.dart';
 import 'package:response/response.dart';
 
 void main() {
@@ -9,13 +12,17 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Response(
-      originalScreenHeight: 759,
-      originalScreenWidth: 392,
-      child: MaterialApp(
-        title: 'Hack 20 App',
-        home: HomePage()
-      ),
-    );
+    return MultiProvider(
+        providers: [
+          StreamProvider<User>.value(value: AuthService().user),
+        ],
+        child: Response(
+          originalScreenHeight: 759,
+          originalScreenWidth: 392,
+          child: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Hack 20 App',
+              home: HomePage()),
+        ));
   }
 }
