@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hack20/screens/user/FoodRegisterScreen.dart';
 import 'package:hack20/screens/user/profileScreen.dart';
+import 'package:hack20/screens/user/userFoodHistory.dart';
 import 'package:hack20/services/auth.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,15 +13,18 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex;
+  String title = 'Home Page';
 
   @override
   void initState() {
     super.initState();
-    currentIndex = 2;
+    currentIndex = 0;
   }
 
   void changePage(int index) {
     setState(() {
+      if (index == 1) title = 'Food History';
+      if (index == 2) title = 'Profile';
       currentIndex = index;
     });
   }
@@ -29,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: Text(title),
         actions: <Widget>[
           FlatButton(
             child: Text('Log Out'),
@@ -94,11 +98,11 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ]
       ),
-      body: _PageChange()
+      body: _pageChange()
     );
   }
 
-  _PageChange() {
+  _pageChange() {
     switch(currentIndex) {
       case 0:
         return Container(
@@ -106,9 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
         );
         break;
       case 1:
-        return Container(
-          child: Center(child: Text('History'))
-        );
+        return UserFoodHistory();
         break;
       case 2:
         return ProfileScreen();

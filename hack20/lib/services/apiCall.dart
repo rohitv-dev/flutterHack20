@@ -23,7 +23,7 @@ class APICall {
       for (int i = 0; i < routeMatrix.length; i++) {
         distances.add(routeMatrix[i].summary.distance);
       }
-      addItem('0', json.encode(distances).toString());
+      addItem('ngoDis', json.encode(distances).toString());
     } catch(error) {
       return null;
     }
