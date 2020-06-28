@@ -18,13 +18,15 @@ class DatabaseService {
   }
 
   Future setFoodData(
-      String id, String name, String email, int quantity,
-      Timestamp notifiedTime, Timestamp bestBeforeTime,
+      String id, String name, String email, double latitude, double longitude,
+      int quantity, Timestamp notifiedTime, Timestamp bestBeforeTime,
       bool isReady, bool hasBeenPickedUp, String pickedBy, String imageUrl) async {
     return _foodCollection.document('food' + id.padLeft(4, '0')).setData({
       'id': id,
       'name': name,
       'email': email,
+      'latitude': latitude,
+      'longitude': longitude,
       'quantity': quantity,
       'notifiedTime': notifiedTime,
       'bestBeforeTime': bestBeforeTime,
@@ -41,6 +43,8 @@ class DatabaseService {
           id: doc.data['id'] ?? '',
           name: doc.data['name'] ?? '',
           email: doc.data['email'] ?? '',
+          latitude: doc.data['latitude'] ?? 0.0,
+          longitude: doc.data['longitude'] ?? 0.0,
           quantity: doc.data['quantity'] ?? 0,
           notifiedTime: doc.data['notifiedTime'] ?? Timestamp.now(),
           bestBeforeTime: doc.data['bestBeforeTime'] ?? Timestamp.now(),

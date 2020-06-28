@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hack20/models/userModel.dart';
@@ -31,7 +31,6 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
   var response = ResponseUI.instance;
 
   static FirebaseStorage storage = FirebaseStorage.instance;
-
 
   File imageFile;
 
@@ -191,14 +190,13 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                                 style: TextStyle(color: Colors.white),
                               ),
                               onPressed: () async {
-                                Random rnd = Random();
                                 DateTime defaultBestBefore = DateTime.now().add(Duration(hours: 24));
-                                var count = await DatabaseService().getFoodCount();
+                                var foodCount = await DatabaseService().getFoodCount();
                                 await DatabaseService().setFoodData(
-                                    'food' + '${count['count']}'.padLeft(4, '0'), productName, user.email,
-                                    rnd.nextInt(10), Timestamp.now(), Timestamp.fromDate(defaultBestBefore), true, false, '', url
+                                    '${foodCount['count'] + 1}', productName, user.email, 0.0, 0.0,
+                                    count, Timestamp.now(), Timestamp.fromDate(defaultBestBefore), true, false, '', url
                                 );
-                                await DatabaseService().updateFoodCount(count['count'] + 1);
+                                await DatabaseService().updateFoodCount(foodCount['count'] + 1);
                               }),
                         ],
                       ),
