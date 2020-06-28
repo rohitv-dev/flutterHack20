@@ -5,6 +5,7 @@ import 'package:hack20/screens/user/FoodRegisterScreen.dart';
 import 'package:hack20/screens/user/profileScreen.dart';
 import 'package:hack20/screens/user/userFoodHistory.dart';
 import 'package:hack20/services/auth.dart';
+import 'package:hack20/services/map.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -35,12 +36,17 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text(title),
         actions: <Widget>[
-          FlatButton(
-            child: Text('Log Out'),
-            onPressed: () {
-              AuthService().signOut();
-            },
-          )
+          currentIndex == 2 ? Row(
+            children: <Widget>[
+              Icon(Icons.exit_to_app),
+              FlatButton(
+                child: Text('Log Out'),
+                onPressed: () {
+                  AuthService().signOut();
+                },
+              )
+            ],
+          ) : Container()
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -105,9 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
   _pageChange() {
     switch(currentIndex) {
       case 0:
-        return Container(
-          child: Center(child: Text('Home Screen'))
-        );
+        return AddressMap();
         break;
       case 1:
         return UserFoodHistory();

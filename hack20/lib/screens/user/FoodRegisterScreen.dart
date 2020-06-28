@@ -189,9 +189,10 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                                 var foodCount = await DatabaseService().getFoodCount();
                                 await DatabaseService().setFoodData(
                                     '${foodCount['count'] + 1}', productName, user.email, 0.0, 0.0,
-                                    count, Timestamp.now(), Timestamp.fromDate(defaultBestBefore), true, false, '', url
+                                    count, Timestamp.now(), Timestamp.fromDate(defaultBestBefore), false, '', url
                                 );
                                 await DatabaseService().updateFoodCount(foodCount['count'] + 1);
+                                Navigator.pop(context);
                               }),
                         ],
                       ),
