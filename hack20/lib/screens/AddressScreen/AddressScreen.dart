@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:hack20/screens/AddressScreen/Panel.dart';
+
 
 class SampleMap extends StatefulWidget {
   @override
@@ -31,7 +31,95 @@ class _SampleMapState extends State<SampleMap> {
             zoom: 15
         ),
       ),
-      panel: PanelContents(),
+      panelBuilder: (sc) => _panel(sc,context),
     );
+  }
+
+  Widget _panel(ScrollController sc,context){
+    String name;
+    String phoneNo;
+    String doorNo;
+    String floorNo;
+    String addressLine;
+    String city;
+    String pincode;
+    return ListView(
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            Text("Add Address"),
+            SizedBox(
+              height: 20.0,
+            ),
+            Text("Name"),
+            TextField(
+              onChanged: (fieldName){
+                setState(() {
+                  name = fieldName;
+                });
+              },
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Text("Phone Number"),
+            TextField(onChanged: (fieldPhone){
+              setState(() {
+                phoneNo = fieldPhone;
+              });
+            },),
+            Text("Door No"),
+            TextField(onChanged: (fieldDoor){
+              setState(() {
+                doorNo = fieldDoor;
+              });
+            },),
+            Text("Floor No"),
+            TextField(
+              onChanged: (fieldFloor){
+                setState(() {
+                  floorNo = fieldFloor;
+                });
+              },
+            ),
+            Text("Address Line"),
+            TextField(onChanged: (fieldAddress){
+              setState(() {
+                addressLine = fieldAddress;
+              });
+            },),
+            Text("city"),
+            TextField(onChanged: (fieldCity){
+              setState(() {
+                city = fieldCity;
+              });
+            },),
+            Text("Pincode"),
+            TextField(onChanged: (fieldPin){
+              setState(() {
+                pincode = fieldPin;
+              });
+            },),
+            SizedBox(
+              height: 20.0,
+            ),
+            FlatButton(
+              color: Colors.red,
+              onPressed: (){
+                print(name+phoneNo+doorNo+floorNo+addressLine+city+pincode);
+
+              },
+              child: Text(
+                "Save",
+                style: TextStyle(
+                    color: Colors.white
+                ),
+              ),
+            )
+          ],
+        ),
+      ],
+    );
+
   }
 }
