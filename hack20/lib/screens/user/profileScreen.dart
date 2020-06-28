@@ -15,6 +15,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: <Widget>[
             Container(
               height: 220,
+              width: MediaQuery.of(context).size.width,
               decoration: new BoxDecoration(
                 color: Colors.green,
               ),
@@ -31,8 +32,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             color: Colors.grey[500],
                             blurRadius: 10.0,
                             spreadRadius: 0.0,
-                            offset:
-                                Offset(2.0, 2.0), // shadow direction: bottom right
+                            offset: Offset(
+                                2.0, 2.0), // shadow direction: bottom right
                           )
                         ],
                         color: Colors.white,
@@ -43,13 +44,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: <Widget>[
-                          Icon(
-                            Icons.home,
-                            color: Colors.grey[500],
-                            size: 40.0,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Expanded(flex: 1, child: Text('')),
+                              Expanded(
+                                flex: 1,
+                                child: Icon(
+                                  Icons.home,
+                                  color: Colors.grey[500],
+                                  size: 40.0,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Container(
+                                    alignment: Alignment.centerRight,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        print('edit screen called');
+                                      },
+                                      child: Icon(Icons.edit),
+                                    )),
+                              ),
+                            ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 30.0, top: 30.0),
+                            padding:
+                                const EdgeInsets.only(left: 30.0, top: 30.0),
                             child: Row(
                               children: <Widget>[
                                 SizedBox(
@@ -69,7 +91,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 30.0, top: 10.0),
+                            padding:
+                                const EdgeInsets.only(left: 30.0, top: 10.0),
                             child: Row(
                               children: <Widget>[
                                 SizedBox(
@@ -91,7 +114,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 30.0, top: 10.0),
+                            padding:
+                                const EdgeInsets.only(left: 30.0, top: 10.0),
                             child: Row(
                               children: <Widget>[
                                 SizedBox(
@@ -113,7 +137,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 30.0, top: 10.0),
+                            padding:
+                                const EdgeInsets.only(left: 30.0, top: 10.0),
                             child: Row(
                               children: <Widget>[
                                 SizedBox(
@@ -139,7 +164,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only( top: 30.0),
+                    padding: const EdgeInsets.only(top: 30.0),
                     child: GestureDetector(
                       onTap: () {
                         AuthService().signOut();
@@ -147,14 +172,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Icon(
-                              Icons.exit_to_app,
-                              color: Colors.grey[500]
-                          ),
-                          Text('Logout from my account',
-                          style: TextStyle(
-                            color: Colors.grey[500]
-                          ),)
+                          Icon(Icons.exit_to_app, color: Colors.grey[500]),
+                          Text(
+                            'Logout from my account',
+                            style: TextStyle(color: Colors.grey[500]),
+                          )
                         ],
                       ),
                     ),
@@ -187,27 +209,54 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             child: Column(
               children: <Widget>[
-                Container(
-                  transform: Matrix4.translationValues(0.0, -50.0, 0.0),
-                  width: 120,
-                  height: 120,
-                  decoration: new BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.grey[200],
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey[500],
-                          blurRadius: 10.0,
-                          spreadRadius: 0.0,
-                          offset:
-                              Offset(2.0, 2.0), // shadow direction: bottom right
-                        )
-                      ]),
-                  child: Icon(
-                    Icons.person,
-                    size: 70,
-                    color: Colors.grey,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(flex: 1, child: Text('')),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        transform: Matrix4.translationValues(0.0, -50.0, 0.0),
+                        width: 120,
+                        height: 120,
+                        decoration: new BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.grey[200],
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey[500],
+                                blurRadius: 10.0,
+                                spreadRadius: 0.0,
+                                offset: Offset(
+                                    2.0, 2.0), // shadow direction: bottom right
+                              )
+                            ]),
+                        child: Icon(
+                          Icons.person,
+                          size: 70,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Container(
+                            transform: Matrix4.translationValues(0.0, -50.0, 0.0),
+                            alignment: Alignment.bottomRight,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 20.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  print('edit screen called');
+                                },
+                                child: Icon(Icons.edit),
+                              ),
+                            )),
+                      ),
+                    ),
+                  ],
                 ),
                 Container(
                     transform: Matrix4.translationValues(0.0, -50.0, 0.0),
@@ -254,7 +303,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 children: <Widget>[
                                   Text(
                                     '9940632194',
-                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   Text(
                                     'Phone',
@@ -266,8 +316,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         )
                       ],
-                    )
-                ),
+                    )),
               ],
             ),
           ),
