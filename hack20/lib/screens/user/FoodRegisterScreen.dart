@@ -1,6 +1,11 @@
 import 'dart:io';
+import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hack20/models/userModel.dart';
+import 'package:hack20/services/database.dart';
 import 'package:path/path.dart';
+import 'package:provider/provider.dart';
 import 'package:response/response.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -40,7 +45,7 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
 
     Navigator.of(context).pop();
 
-    String fileName=basename(imageFile.path);
+    String fileName = basename(imageFile.path);
 
     StorageReference reference = storage.ref().child("productImages/$fileName");
 
@@ -51,7 +56,6 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
     url = await taskSnapshot.ref.getDownloadURL();
 
     print("URL String :" + url);
-
   }
 
   _openCamera(BuildContext context) async {
@@ -116,6 +120,7 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    User user = Provider.of<User>(context);
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: Padding(
@@ -184,7 +189,16 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                               'Save Details',
                               style: TextStyle(color: Colors.white),
                             ),
-                            onPressed: () async {}),
+                            onPressed: () async {
+                              Random rnd = Random();
+                              DateTime defaultBestBefore = DateTime.now().add(Duration(hours: 24));
+                              var count = await DatabaseService().getFoodCount();
+                              DatabaseService().setFoodData(
+                                  'food' + '${count['count']}'.padLeft(4, '0'), productName, user.email,
+                                  rnd.nextInt(10), Timestamp.now(), Timestamp.fromDate(defaultBestBefore), true, false, '', url
+                              );
+                              DatabaseService().updateFoodCount(count['count'] + 1);
+                            }),
                       ],
                     ),
                   ),
