@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hack20/models/userModel.dart';
 import 'package:hack20/services/database.dart';
+import 'package:hack20/shared/textDecoration.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:response/response.dart';
@@ -122,7 +123,7 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
     User user = Provider.of<User>(context);
     return Scaffold(
       appBar: AppBar(),
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(response.setFontSize(20.0)),
@@ -159,11 +160,7 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                               onChanged: (val) {
                                 setState(() => productName = val);
                               },
-                              decoration: new InputDecoration(
-                                  contentPadding:
-                                      EdgeInsets.symmetric(vertical: response.setHeight(3.0)),
-                                  // hintText: 'you@example.com',
-                                  labelText: 'Product Name')),
+                              decoration: textInputDecoration.copyWith(hintText: 'Product Name', labelText: 'Product Name')),
                           SizedBox(height: response.setHeight(10.0)),
                           TextFormField(
                               keyboardType: TextInputType.multiline,
@@ -171,18 +168,15 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                                 setState(() => productDesc = val);
                               },
                               maxLines: null,
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(vertical: response.setHeight(3.0)),
-                                  labelText: 'Product description')),
+                              decoration: textInputDecoration.copyWith(hintText: 'Product Description', labelText: 'Product Description')
+                          ),
                           SizedBox(height: response.setHeight(10.0)),
                           TextFormField(
                               keyboardType: TextInputType.number,
                               onChanged: (val) {
                                 setState(() => count = int.parse(val));
                               },
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(vertical: response.setHeight(3.0)),
-                                  labelText: 'Count')),
+                              decoration: textInputDecoration.copyWith(hintText: 'Count', labelText: 'Count')),
                           SizedBox(height: response.setHeight(10.0)),
                           RaisedButton(
                               color: Colors.blue[400],
