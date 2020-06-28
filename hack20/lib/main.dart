@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hack20/Camera.dart';
 import 'package:hack20/homePage.dart';
 import 'package:response/response.dart';
 
@@ -13,8 +14,8 @@ class MyApp extends StatelessWidget {
       originalScreenHeight: 759,
       originalScreenWidth: 392,
       child: MaterialApp(
-        title: 'Hack 20 App',
-        home: HomePage()
+        //title: 'Hack 20 App',
+        home: LandingScreen(),
       ),
     );
   }
