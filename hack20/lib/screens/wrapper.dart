@@ -5,6 +5,7 @@ import 'package:hack20/screens/ngoScreen/ngoScreen.dart';
 import 'package:hack20/screens/user/homeScreen.dart';
 import 'package:hack20/services/roleVerification.dart';
 import 'package:hack20/shared/functions/networkCheck.dart';
+import 'package:hack20/shared/loading.dart';
 import 'package:provider/provider.dart';
 
 class Wrapper extends StatelessWidget {
@@ -22,9 +23,9 @@ class Wrapper extends StatelessWidget {
             if (snapshot.hasData) {
               if (snapshot.data == 'useraccess') return HomeScreen();
               if (snapshot.data == 'ngoaccess') return NgoScreen();
-            } else {return Container();}
-          } else {return Container();}
-          return null;
+            } else {return Loading();}
+          } else {return Loading();}
+          return Loading();
         }
       );
     }
