@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -8,6 +9,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Text('homescreen');
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home Page')
+      ),
+      body: Center(
+        child: Text('Home Page')
+      )
+    );
   }
 }

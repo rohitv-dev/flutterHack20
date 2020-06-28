@@ -10,17 +10,29 @@ import 'package:provider/provider.dart';
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
     checkNetwork();
+    final user = Provider.of<User>(context);
     if (user == null) {
       return Authenticate();
     } else {
-      dynamic role = AccountVerification().checkRole(user.email);
-      if (role == 'useraccess') {
-        return HomeScreen();
-      } else if (role == 'ngoaccess') {
-        return NgoScreen();
-      }
+      return FutureBuilder(
+        future: checkLoginRole(user.email),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.data == 'useraccess') return HomeScreen();
+            if (snapshot.data == 'ngoaccess') return NgoScreen();
+          } else {return Container();}
+        }
+      );
+    }
+  }
+
+  Future<String> checkLoginRole(String email) async {
+    var role = await AccountVerification().checkRole(email);
+    if (role == 'useraccess') {
+      return 'useraccess';
+    } else if (role == 'ngoaccess') {
+      return 'ngoaccess';
     }
   }
 }
