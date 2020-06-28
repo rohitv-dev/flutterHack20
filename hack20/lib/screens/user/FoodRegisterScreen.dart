@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:response/response.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -26,7 +27,6 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
 
   static FirebaseStorage storage = FirebaseStorage.instance;
 
-  static StorageReference reference = storage.ref().child("productImages/");
 
   File imageFile;
 
@@ -38,21 +38,11 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
       imageFile = picture;
     });
 
-    StorageUploadTask uploadTask = reference.putFile(imageFile);
-
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-
-    url = await taskSnapshot.ref.getDownloadURL();
-
     Navigator.of(context).pop();
-  }
 
-  _openCamera(BuildContext context) async {
-    // ignore: deprecated_member_use
-    var picture = await ImagePicker.pickImage(source: ImageSource.camera);
-    this.setState(() {
-      imageFile = picture;
-    });
+    String fileName=basename(imageFile.path);
+
+    StorageReference reference = storage.ref().child("productImages/$fileName");
 
     StorageUploadTask uploadTask = reference.putFile(imageFile);
 
@@ -62,7 +52,29 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
 
     print("URL String :" + url);
 
+  }
+
+  _openCamera(BuildContext context) async {
+    // ignore: deprecated_member_use
+    var picture = await ImagePicker.pickImage(source: ImageSource.camera);
+    this.setState(() {
+      imageFile = picture;
+    });
+
     Navigator.of(context).pop();
+
+    String fileName=basename(imageFile.path);
+
+    StorageReference reference = storage.ref().child("productImages/$fileName");
+
+    StorageUploadTask uploadTask = reference.putFile(imageFile);
+
+    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+
+    url = await taskSnapshot.ref.getDownloadURL();
+
+    print("URL String :" + url);
+
   }
 
   Future<void> _showChoiceDialog(BuildContext context) {
