@@ -11,6 +11,8 @@ import 'package:response/response.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../shared/textDecoration.dart';
+
 class FoodRegisterScreen extends StatefulWidget {
   final String url;
   final String productName;
@@ -123,7 +125,8 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
   Widget build(BuildContext context) {
     User user = Provider.of<User>(context);
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      appBar: AppBar(),
+      resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(20.0),
@@ -201,7 +204,8 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                                 },
                                 decoration: InputDecoration(
                                     contentPadding: EdgeInsets.symmetric(vertical: response.setHeight(3.0)),
-                                    labelText: 'Serves(No of Persons)')),
+                                    labelText: 'Serves(No of Persons)')
+                               ),
                             SizedBox(height: response.setHeight(10.0)),
                             RaisedButton(
                                 color: Colors.blue[400],
@@ -228,11 +232,11 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                     ),
                   ],
                 ),
-              ),
             ),
           ),
         ),
       ),
+    ),
     );
   }
 }
