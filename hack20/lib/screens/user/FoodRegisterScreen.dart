@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hack20/models/userModel.dart';
 import 'package:hack20/services/database.dart';
@@ -112,9 +113,9 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
 
   Widget _decideImageView() {
     if (imageFile == null) {
-      return Text("No Image Selected");
+      return Center(child: Text("No Image Selected"));
     } else {
-      return Image.file(imageFile, width: response.setWidth(200.0), height: response.setHeight(200.0));
+      return Image.file(imageFile, height: response.setHeight(170.0),width: response.setWidth(170.0));
     }
   }
 
@@ -125,86 +126,108 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(response.setFontSize(20.0)),
+          padding: EdgeInsets.all(20.0),
           child: Container(
             // height: response.setHeight(200),
             child: Center(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    height: response.setHeight(250),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        _decideImageView(),
-                        RaisedButton(
-                          color: Colors.blue[400],
-                          onPressed: () {
-                            _showChoiceDialog(context);
-                          },
-                          child: Text(
-                            "Select Image",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ],
+              child: Card(
+                elevation: 3,
+                child: Column(
+
+                  children: <Widget>[
+                    SizedBox(height: 10),
+                    Text('Food Details',
+                      style: TextStyle(
+                      fontSize: 20.0,
                     ),
-                  ),
-                  Container(
-                    child: Form(
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(height: response.setHeight(10.0)),
-                          TextFormField(
-                              onChanged: (val) {
-                                setState(() => productName = val);
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      width: response.setWidth(300),
+                      height: response.setHeight(250),
+                      child: Card(
+                        elevation: 10,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            _decideImageView(),
+                            FloatingActionButton(
+                              //floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+                              //color: Colors.blue[400],
+                              onPressed: () {
+                                _showChoiceDialog(context);
                               },
-                              decoration: new InputDecoration(
-                                  contentPadding:
-                                      EdgeInsets.symmetric(vertical: response.setHeight(3.0)),
-                                  // hintText: 'you@example.com',
-                                  labelText: 'Product Name')),
-                          SizedBox(height: response.setHeight(10.0)),
-                          TextFormField(
-                              keyboardType: TextInputType.multiline,
-                              onChanged: (val) {
-                                setState(() => productDesc = val);
-                              },
-                              maxLines: null,
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(vertical: response.setHeight(3.0)),
-                                  labelText: 'Product description')),
-                          SizedBox(height: response.setHeight(10.0)),
-                          TextFormField(
-                              keyboardType: TextInputType.number,
-                              onChanged: (val) {
-                                setState(() => count = int.parse(val));
-                              },
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(vertical: response.setHeight(3.0)),
-                                  labelText: 'Count')),
-                          SizedBox(height: response.setHeight(10.0)),
-                          RaisedButton(
-                              color: Colors.blue[400],
-                              child: Text(
-                                'Save Details',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              onPressed: () async {
-                                Random rnd = Random();
-                                DateTime defaultBestBefore = DateTime.now().add(Duration(hours: 24));
-                                var count = await DatabaseService().getFoodCount();
-                                await DatabaseService().setFoodData(
-                                    'food' + '${count['count']}'.padLeft(4, '0'), productName, user.email,
-                                    rnd.nextInt(10), Timestamp.now(), Timestamp.fromDate(defaultBestBefore), true, false, '', url
-                                );
-                                await DatabaseService().updateFoodCount(count['count'] + 1);
-                              }),
-                        ],
+                              child: Icon(Icons.add_a_photo),
+
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    Container(
+                      padding: EdgeInsets.all(20.0),
+                      child: Form(
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(height: response.setHeight(10.0)),
+                            TextFormField(
+
+                                onChanged: (val) {
+                                  setState(() => productName = val);
+                                },
+                                decoration: new InputDecoration(
+                                    contentPadding:
+                                        EdgeInsets.symmetric(vertical: response.setHeight(3.0)),
+                                    // hintText: 'you@example.com',
+                                    labelText: 'Item Name',
+                                ),
+                            ),
+                            SizedBox(height: response.setHeight(10.0)),
+                            TextFormField(
+                                keyboardType: TextInputType.multiline,
+                                onChanged: (val) {
+                                  setState(() => productDesc = val);
+                                },
+                                maxLines: null,
+                                decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.symmetric(vertical: response.setHeight(3.0)),
+                                    labelText: 'Item description')),
+                            SizedBox(height: response.setHeight(10.0)),
+                            TextFormField(
+                                keyboardType: TextInputType.number,
+                                onChanged: (val) {
+                                  setState(() => count = int.parse(val));
+                                },
+                                decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.symmetric(vertical: response.setHeight(3.0)),
+                                    labelText: 'Serves(No of Persons)')),
+                            SizedBox(height: response.setHeight(10.0)),
+                            RaisedButton(
+                                color: Colors.blue[400],
+                                child: Text(
+                                  'Save Details',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                ),
+                                onPressed: () async {
+                                  Random rnd = Random();
+                                  DateTime defaultBestBefore = DateTime.now().add(Duration(hours: 24));
+                                  var count = await DatabaseService().getFoodCount();
+                                  await DatabaseService().setFoodData(
+                                      'food' + '${count['count']}'.padLeft(4, '0'), productName, user.email,
+                                      rnd.nextInt(10), Timestamp.now(), Timestamp.fromDate(defaultBestBefore), true, false, '', url
+                                  );
+                                  await DatabaseService().updateFoodCount(count['count'] + 1);
+                                }),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
