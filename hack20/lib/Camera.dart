@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hack20/database.dart';
+import 'package:path/path.dart';
 import 'package:response/response.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,9 +31,10 @@ class _LandingScreenState extends State<LandingScreen> {
 
   static FirebaseStorage storage = FirebaseStorage.instance;
 
- static StorageReference reference = storage.ref().child("productImages/");
+ //static StorageReference reference = storage.ref().child("productImages/$fileName");
 
   File imageFile;
+
 
   _openGallery(BuildContext context) async{
     // ignore: deprecated_member_use
@@ -42,22 +44,11 @@ class _LandingScreenState extends State<LandingScreen> {
       imageFile=picture;
     });
 
-    StorageUploadTask uploadTask = reference.putFile(imageFile);
-
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-
-    url = await taskSnapshot.ref.getDownloadURL();
-
-
     Navigator.of(context).pop();
-  }
 
-  _openCamera(BuildContext context) async{
-    // ignore: deprecated_member_use
-    var picture=await ImagePicker.pickImage(source:ImageSource.camera);
-    this.setState(() {
-      imageFile=picture;
-    });
+    String fileName=basename(imageFile.path);
+
+    StorageReference reference = storage.ref().child("productImages/$fileName");
 
     StorageUploadTask uploadTask = reference.putFile(imageFile);
 
@@ -67,7 +58,30 @@ class _LandingScreenState extends State<LandingScreen> {
 
     print("URL String :" + url);
 
+  }
+
+  _openCamera(BuildContext context) async{
+    // ignore: deprecated_member_use
+    var picture=await ImagePicker.pickImage(source:ImageSource.camera);
+    this.setState(() {
+      imageFile=picture;
+    });
+
     Navigator.of(context).pop();
+
+    String fileName=basename(imageFile.path);
+
+    StorageReference reference = storage.ref().child("productImages/$fileName");
+
+    StorageUploadTask uploadTask = reference.putFile(imageFile);
+
+    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+
+    url = await taskSnapshot.ref.getDownloadURL();
+
+    print("URL String :" + url);
+
+
   }
 
   Future<void> _showChoiceDialog(BuildContext context){
@@ -108,6 +122,7 @@ class _LandingScreenState extends State<LandingScreen> {
   }
 
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -117,7 +132,7 @@ class _LandingScreenState extends State<LandingScreen> {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Container(
-          // height: response.setHeight(200),
+          //height: response.setHeight(200.0),
           child: Center(
             child: Column(
               children: <Widget>[
