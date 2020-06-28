@@ -21,6 +21,10 @@ class MyApp extends StatelessWidget {
           originalScreenWidth: 392,
           child: MaterialApp(
               debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                primaryColor: Colors.white,
+                buttonColor: Colors.pink
+              ),
               title: 'Hack 20 App',
               home: Wrapper()),
         ));

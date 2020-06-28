@@ -3,6 +3,7 @@ import 'package:hack20/screens/authentication/forgotPassword.dart';
 import 'package:hack20/services/auth.dart';
 import 'package:hack20/shared/loading.dart';
 import 'package:hack20/shared/textDecoration.dart';
+import 'package:response/response.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -13,6 +14,7 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  final response = ResponseUI.instance;
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   String error = '';
@@ -26,11 +28,9 @@ class _SignInState extends State<SignIn> {
     return loading
         ? Loading()
         : Scaffold(
-            backgroundColor: Colors.brown[100],
             appBar: AppBar(
-              backgroundColor: Colors.brown[400],
-              elevation: 0.0,
-              title: Text('Sign in'),
+              elevation: 3.0,
+              title: Text('Sign In'),
               actions: <Widget>[
                 FlatButton.icon(
                   icon: Icon(Icons.person),
@@ -40,58 +40,58 @@ class _SignInState extends State<SignIn> {
               ],
             ),
             body: Container(
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+              padding: EdgeInsets.symmetric(vertical: response.setHeight(20.0), horizontal: response.setWidth(23.0)),
               child: Form(
                 key: _formKey,
                 child: Column(
                   children: <Widget>[
-                    SizedBox(height: 20.0),
+                    SizedBox(height: response.setHeight(20.0)),
                     TextFormField(
                       decoration:
-                          textInputDecoration.copyWith(hintText: 'email'),
+                          textInputDecoration.copyWith(hintText: 'Email', labelText: 'Email'),
                       keyboardType: TextInputType.emailAddress,
                       validator: (val) => val.isEmpty ? 'Enter an email' : null,
                       onChanged: (val) {
                         setState(() => email = val.replaceAll(' ', ''));
                       },
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: response.setHeight(20.0)),
                     TextFormField(
                       obscureText: true,
                       decoration:
-                          textInputDecoration.copyWith(hintText: 'password'),
-                      validator: (val) => val.length < 6
-                          ? 'Enter a password 6+ chars long'
-                          : null,
+                          textInputDecoration.copyWith(hintText: 'Password', labelText: 'Password'),
+                      validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
                       onChanged: (val) {
                         setState(() => password = val.replaceAll(' ', ''));
                       },
                     ),
-                    SizedBox(height: 20.0),
-                    RaisedButton(
-                        color: Colors.pink[400],
-                        child: Text(
-                          'Sign In',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onPressed: () async {
-                          if (_formKey.currentState.validate()) {
-                            setState(() => loading = true);
-                            dynamic result = await _auth
-                                .signInWithEmailAndPassword(email, password);
-                            if (result == null) {
-                              setState(() {
-                                loading = false;
-                                error =
-                                    'Could not sign in with those credentials';
-                              });
+                    SizedBox(height: response.setHeight(20.0)),
+                    Container(
+                      width: response.setWidth(300),
+                      child: RaisedButton(
+                          child: Text(
+                            'Sign In',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () async {
+                            if (_formKey.currentState.validate()) {
+                              setState(() => loading = true);
+                              dynamic result = await _auth
+                                  .signInWithEmailAndPassword(email, password);
+                              if (result == null) {
+                                setState(() {
+                                  loading = false;
+                                  error =
+                                      'Could not sign in with those credentials';
+                                });
+                              }
                             }
-                          }
-                        }),
-                    SizedBox(height: 12.0),
+                          }),
+                    ),
+                    SizedBox(height: response.setHeight(12.0)),
                     GestureDetector(
                         child: Text('Forgot password?',
-                            style: TextStyle(fontSize: 16.0)),
+                            style: TextStyle(fontSize: response.setFontSize(15.0))),
                         onTap: () {
                           Navigator.push(
                             context,
@@ -99,10 +99,17 @@ class _SignInState extends State<SignIn> {
                                 builder: (context) => ForgotPassword()),
                           );
                         }),
-                    SizedBox(height: 12.0),
+                    SizedBox(height: response.setHeight(12.0)),
+                    GestureDetector(
+                      child: Text('Not yet a user? Sign up!',
+                            style: TextStyle(color: Colors.blue, fontSize: response.setFontSize(16.0), decoration: TextDecoration.underline)),
+                      onTap: () {
+                        widget.toggleView();
+                      },
+                    ),
                     Text(
                       error,
-                      style: TextStyle(color: Colors.red, fontSize: 14.0),
+                      style: TextStyle(color: Colors.red, fontSize: response.setFontSize(14.0)),
                     ),
                   ],
                 ),

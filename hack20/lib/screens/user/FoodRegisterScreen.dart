@@ -10,8 +10,7 @@ class FoodRegisterScreen extends StatefulWidget {
   final String productDesc;
   final int count;
 
-  FoodRegisterScreen(
-      {this.url, this.productName, this.productDesc, this.count});
+  FoodRegisterScreen({this.url, this.productName, this.productDesc, this.count});
 
   @override
   _FoodRegisterScreenState createState() => _FoodRegisterScreenState();
@@ -81,7 +80,7 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                       _openGallery(context);
                     },
                   ),
-                  Padding(padding: EdgeInsets.all(18.0)),
+                  Padding(padding: EdgeInsets.all(response.setFontSize(18.0))),
                   GestureDetector(
                     child: Text("Camera"),
                     onTap: () {
@@ -99,7 +98,7 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
     if (imageFile == null) {
       return Text("No Image Selected");
     } else {
-      return Image.file(imageFile, width: 200, height: 200);
+      return Image.file(imageFile, width: response.setWidth(200.0), height: response.setHeight(200.0));
     }
   }
 
@@ -108,14 +107,14 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(response.setFontSize(20.0)),
         child: Container(
           // height: response.setHeight(200),
           child: Center(
             child: Column(
               children: <Widget>[
                 Container(
-                  height: 250,
+                  height: response.setHeight(250),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
@@ -137,40 +136,36 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                   child: Form(
                     child: Column(
                       children: <Widget>[
-                        SizedBox(height: 10.0),
+                        SizedBox(height: response.setHeight(10.0)),
                         TextFormField(
                             onChanged: (val) {
                               setState(() => productName = val);
                             },
                             decoration: new InputDecoration(
                                 contentPadding:
-                                    const EdgeInsets.symmetric(vertical: 3.0),
+                                    EdgeInsets.symmetric(vertical: response.setHeight(3.0)),
                                 // hintText: 'you@example.com',
                                 labelText: 'Product Name')),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: response.setHeight(10.0)),
                         TextFormField(
                             keyboardType: TextInputType.multiline,
                             onChanged: (val) {
                               setState(() => productDesc = val);
                             },
                             maxLines: null,
-                            decoration: new InputDecoration(
-                                contentPadding:
-                                    const EdgeInsets.symmetric(vertical: 3.0),
-                                //hintText: 'you@example.com',
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(vertical: response.setHeight(3.0)),
                                 labelText: 'Product description')),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: response.setHeight(10.0)),
                         TextFormField(
                             keyboardType: TextInputType.number,
                             onChanged: (val) {
                               setState(() => count = int.parse(val));
                             },
-                            decoration: new InputDecoration(
-                                contentPadding:
-                                    const EdgeInsets.symmetric(vertical: 3.0),
-                                // hintText: 'you@example.com',
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(vertical: response.setHeight(3.0)),
                                 labelText: 'Count')),
-                        SizedBox(height: 10.0),
+                        SizedBox(height: response.setHeight(10.0)),
                         RaisedButton(
                             color: Colors.blue[400],
                             child: Text(

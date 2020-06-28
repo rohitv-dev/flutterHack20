@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hack20/services/auth.dart';
 import 'package:hack20/shared/loading.dart';
 import 'package:hack20/shared/textDecoration.dart';
+import 'package:response/response.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
@@ -12,6 +13,7 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  final response = ResponseUI.instance;
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _pass = TextEditingController();
@@ -28,11 +30,9 @@ class _RegisterState extends State<Register> {
     return loading
         ? Loading()
         : Scaffold(
-            backgroundColor: Colors.brown[100],
             appBar: AppBar(
-              backgroundColor: Colors.brown[400],
-              elevation: 0.0,
-              title: Text('Sign up'),
+              elevation: 3.0,
+              title: Text('Sign Up'),
               actions: <Widget>[
                 FlatButton.icon(
                   icon: Icon(Icons.person),
@@ -43,25 +43,25 @@ class _RegisterState extends State<Register> {
             ),
             body: SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
+                padding: EdgeInsets.symmetric(vertical: response.setHeight(20.0), horizontal: response.setWidth(23.0)),
                 child: Form(
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: 20.0),
+                      SizedBox(height: response.setHeight(20.0)),
                       TextFormField(
                         decoration:
-                            textInputDecoration.copyWith(hintText: 'email'),
+                            textInputDecoration.copyWith(hintText: 'Email', labelText: 'Email'),
                         validator: (val) =>
                             val.isEmpty ? 'Enter an email' : null,
                         onChanged: (val) {
                           setState(() => email = val.replaceAll(' ', ''));
                         },
                       ),
-                      SizedBox(height: 20.0),
+                      SizedBox(height: response.setHeight(20.0)),
                       TextFormField(
                         decoration:
-                            textInputDecoration.copyWith(hintText: 'password'),
+                            textInputDecoration.copyWith(hintText: 'Password', labelText: 'Password'),
                         obscureText: true,
                         controller: _pass,
                         validator: (val) {
@@ -75,10 +75,9 @@ class _RegisterState extends State<Register> {
                           setState(() => password = val);
                         },
                       ),
-                      SizedBox(height: 20.0),
+                      SizedBox(height: response.setHeight(20.0)),
                       TextFormField(
-                        decoration: textInputDecoration.copyWith(
-                            hintText: 'confirm password'),
+                        decoration: textInputDecoration.copyWith(hintText: 'Confirm Password', labelText: 'Confirm Password'),
                         obscureText: true,
                         controller: _confirmPass,
                         validator: (val) {
@@ -91,11 +90,10 @@ class _RegisterState extends State<Register> {
                           setState(() => password = val);
                         },
                       ),
-                      SizedBox(height: 20.0),
+                      SizedBox(height: response.setHeight(20.0)),
                       Row(
                         children: <Widget>[
                           RaisedButton(
-                              color: Colors.pink[400],
                               child: Text(
                                 'Register as User',
                                 style: TextStyle(color: Colors.white),
@@ -115,7 +113,7 @@ class _RegisterState extends State<Register> {
                                   }
                                 }
                               }),
-                          SizedBox(width: 8),
+                          SizedBox(width: response.setWidth(8.0)),
                           RaisedButton(
                               color: Colors.pink[400],
                               child: Text(
@@ -139,10 +137,18 @@ class _RegisterState extends State<Register> {
                               }),
                         ],
                       ),
-                      SizedBox(height: 12.0),
+                      SizedBox(height: response.setHeight(12.0)),
+                      GestureDetector(
+                          child: Text('Already have an account? Sign In!',
+                              style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline, fontSize: response.setFontSize(17))
+                          ),
+                        onTap: () {
+                            widget.toggleView();
+                        },
+                      ),
                       Text(
                         error,
-                        style: TextStyle(color: Colors.red, fontSize: 14.0),
+                        style: TextStyle(color: Colors.red, fontSize: response.setFontSize(14.0)),
                       )
                     ],
                   ),

@@ -16,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text('Home Page'),
         actions: <Widget>[
           FlatButton(
-            child: Text('Log Out', style: TextStyle(color: Colors.white)),
+            child: Text('Log Out'),
             onPressed: () {
               AuthService().signOut();
             },
