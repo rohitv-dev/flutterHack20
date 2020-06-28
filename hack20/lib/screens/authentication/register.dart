@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hack20/services/auth.dart';
 import 'package:hack20/shared/loading.dart';
@@ -44,7 +43,7 @@ class _RegisterState extends State<Register> {
             ),
             body: SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+                padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -93,27 +92,53 @@ class _RegisterState extends State<Register> {
                         },
                       ),
                       SizedBox(height: 20.0),
-                      RaisedButton(
-                          color: Colors.pink[400],
-                          child: Text(
-                            'Register',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          onPressed: () async {
-                            if (_formKey.currentState.validate()) {
-                              setState(() => loading = true);
-                              dynamic result =
+                      Row(
+                        children: <Widget>[
+                          RaisedButton(
+                              color: Colors.pink[400],
+                              child: Text(
+                                'Register as User',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
+                                  setState(() => loading = true);
+                                  dynamic result =
                                   await _auth.registerWithEmailAndPassword(
-                                      email, password);
-                              if (result == null) {
-                                setState(() {
-                                  loading = false;
-                                  error =
+                                      email, password, 'USER');
+                                  if (result == null) {
+                                    setState(() {
+                                      loading = false;
+                                      error =
                                       'Please supply a valid email or check password';
-                                });
-                              }
-                            }
-                          }),
+                                    });
+                                  }
+                                }
+                              }),
+                          SizedBox(width: 8),
+                          RaisedButton(
+                              color: Colors.pink[400],
+                              child: Text(
+                                'Register as NGO',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
+                                  setState(() => loading = true);
+                                  dynamic result =
+                                  await _auth.registerWithEmailAndPassword(
+                                      email, password, 'NGO');
+                                  if (result == null) {
+                                    setState(() {
+                                      loading = false;
+                                      error =
+                                      'Please supply a valid email or check password';
+                                    });
+                                  }
+                                }
+                              }),
+                        ],
+                      ),
                       SizedBox(height: 12.0),
                       Text(
                         error,

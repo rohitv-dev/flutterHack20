@@ -30,12 +30,12 @@ class AuthService {
     }
   }
 
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future registerWithEmailAndPassword(String email, String password, String role) async {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
-      await AccountVerification().addSingleRole(email, 'USER');
+      await AccountVerification().addSingleRole(email, role);
       return _userFromFirebaseUser(user);
     } catch (error) {
       print(error.toString());

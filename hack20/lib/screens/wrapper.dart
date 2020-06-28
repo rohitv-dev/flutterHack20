@@ -24,6 +24,7 @@ class Wrapper extends StatelessWidget {
               if (snapshot.data == 'ngoaccess') return NgoScreen();
             } else {return Container();}
           } else {return Container();}
+          return null;
         }
       );
     }
@@ -36,5 +37,6 @@ class Wrapper extends StatelessWidget {
     } else if (role == 'ngoaccess') {
       return 'ngoaccess';
     }
+    return null;
   }
 }
