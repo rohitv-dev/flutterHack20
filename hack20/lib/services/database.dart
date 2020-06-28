@@ -3,8 +3,9 @@ import 'package:hack20/models/foodModel.dart';
 
 class DatabaseService {
   final String email;
+  final String ngoName;
 
-  DatabaseService({this.email});
+  DatabaseService({this.email, this.ngoName});
 
   final CollectionReference _foodCollection = Firestore.instance.collection('food');
   final CollectionReference _counterCollection = Firestore.instance.collection('counter');
@@ -18,13 +19,15 @@ class DatabaseService {
   }
 
   Future setFoodData(
-      String id, String name, String email, int quantity,
-      Timestamp notifiedTime, Timestamp bestBeforeTime,
+      String id, String name, String email, double latitude, double longitude,
+      int quantity, Timestamp notifiedTime, Timestamp bestBeforeTime,
       bool isReady, bool hasBeenPickedUp, String pickedBy, String imageUrl) async {
     return _foodCollection.document('food' + id.padLeft(4, '0')).setData({
       'id': id,
       'name': name,
       'email': email,
+      'latitude': latitude,
+      'longitude': longitude,
       'quantity': quantity,
       'notifiedTime': notifiedTime,
       'bestBeforeTime': bestBeforeTime,
@@ -41,6 +44,8 @@ class DatabaseService {
           id: doc.data['id'] ?? '',
           name: doc.data['name'] ?? '',
           email: doc.data['email'] ?? '',
+          latitude: doc.data['latitude'] ?? 12.837605,
+          longitude: doc.data['longitude'] ?? 80.205146,
           quantity: doc.data['quantity'] ?? 0,
           notifiedTime: doc.data['notifiedTime'] ?? Timestamp.now(),
           bestBeforeTime: doc.data['bestBeforeTime'] ?? Timestamp.now(),
@@ -58,5 +63,9 @@ class DatabaseService {
 
   Stream<List<Food>> get userFoodHistory {
     return _foodCollection.where('email', isEqualTo: email).snapshots().map(_foodListFromSnapshot);
+  }
+
+  Stream<List<Food>> get ngoFoodHistory {
+    return _foodCollection.where('pickedBy', isEqualTo: ngoName).snapshots().map(_foodListFromSnapshot);
   }
 }
