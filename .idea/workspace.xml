@@ -2,15 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3f3511a1-c478-4ce7-9f46-3b8b7ed02784" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/hack20/lib/screens/AddressScreen/AddressScreen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hack20/lib/screens/AddressScreen/Panel.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/hack20.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/hack20.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hack20/lib/screens/AddressScreen/AddressScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/hack20/lib/screens/AddressScreen/AddressScreen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3_XL_API_28" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="c1c02ee0" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -62,6 +64,10 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="460" y="154" key="#main.dart" timestamp="1593339786743">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="460" y="154" key="#main.dart/0.0.1536.864@0.0.1536.864" timestamp="1593339786743" />
     <state x="549" y="187" key="FileChooserDialogImpl" timestamp="1593339174736">
       <screen x="0" y="0" width="1536" height="864" />
     </state>

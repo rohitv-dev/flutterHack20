@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:hack20/screens/AddressScreen/Panel.dart';
 
 class SampleMap extends StatefulWidget {
   @override
@@ -30,7 +31,7 @@ class _SampleMapState extends State<SampleMap> {
             zoom: 15
         ),
       ),
-      panel: Container(),
+      panel: PanelContents(),
     );
   }
 }
