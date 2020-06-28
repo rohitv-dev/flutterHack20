@@ -122,88 +122,90 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
   Widget build(BuildContext context) {
     User user = Provider.of<User>(context);
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      body: Padding(
-        padding: EdgeInsets.all(response.setFontSize(20.0)),
-        child: Container(
-          // height: response.setHeight(200),
-          child: Center(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  height: response.setHeight(250),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      _decideImageView(),
-                      RaisedButton(
-                        color: Colors.blue[400],
-                        onPressed: () {
-                          _showChoiceDialog(context);
-                        },
-                        child: Text(
-                          "Select Image",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  child: Form(
+      resizeToAvoidBottomInset: false,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(response.setFontSize(20.0)),
+          child: Container(
+            // height: response.setHeight(200),
+            child: Center(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    height: response.setHeight(250),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
-                        SizedBox(height: response.setHeight(10.0)),
-                        TextFormField(
-                            onChanged: (val) {
-                              setState(() => productName = val);
-                            },
-                            decoration: new InputDecoration(
-                                contentPadding:
-                                    EdgeInsets.symmetric(vertical: response.setHeight(3.0)),
-                                // hintText: 'you@example.com',
-                                labelText: 'Product Name')),
-                        SizedBox(height: response.setHeight(10.0)),
-                        TextFormField(
-                            keyboardType: TextInputType.multiline,
-                            onChanged: (val) {
-                              setState(() => productDesc = val);
-                            },
-                            maxLines: null,
-                            decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(vertical: response.setHeight(3.0)),
-                                labelText: 'Product description')),
-                        SizedBox(height: response.setHeight(10.0)),
-                        TextFormField(
-                            keyboardType: TextInputType.number,
-                            onChanged: (val) {
-                              setState(() => count = int.parse(val));
-                            },
-                            decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(vertical: response.setHeight(3.0)),
-                                labelText: 'Count')),
-                        SizedBox(height: response.setHeight(10.0)),
+                        _decideImageView(),
                         RaisedButton(
-                            color: Colors.blue[400],
-                            child: Text(
-                              'Save Details',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onPressed: () async {
-                              Random rnd = Random();
-                              DateTime defaultBestBefore = DateTime.now().add(Duration(hours: 24));
-                              var count = await DatabaseService().getFoodCount();
-                              await DatabaseService().setFoodData(
-                                  'food' + '${count['count']}'.padLeft(4, '0'), productName, user.email,
-                                  rnd.nextInt(10), Timestamp.now(), Timestamp.fromDate(defaultBestBefore), true, false, '', url
-                              );
-                              await DatabaseService().updateFoodCount(count['count'] + 1);
-                            }),
+                          color: Colors.blue[400],
+                          onPressed: () {
+                            _showChoiceDialog(context);
+                          },
+                          child: Text(
+                            "Select Image",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                ),
-              ],
+                  Container(
+                    child: Form(
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(height: response.setHeight(10.0)),
+                          TextFormField(
+                              onChanged: (val) {
+                                setState(() => productName = val);
+                              },
+                              decoration: new InputDecoration(
+                                  contentPadding:
+                                      EdgeInsets.symmetric(vertical: response.setHeight(3.0)),
+                                  // hintText: 'you@example.com',
+                                  labelText: 'Product Name')),
+                          SizedBox(height: response.setHeight(10.0)),
+                          TextFormField(
+                              keyboardType: TextInputType.multiline,
+                              onChanged: (val) {
+                                setState(() => productDesc = val);
+                              },
+                              maxLines: null,
+                              decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(vertical: response.setHeight(3.0)),
+                                  labelText: 'Product description')),
+                          SizedBox(height: response.setHeight(10.0)),
+                          TextFormField(
+                              keyboardType: TextInputType.number,
+                              onChanged: (val) {
+                                setState(() => count = int.parse(val));
+                              },
+                              decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(vertical: response.setHeight(3.0)),
+                                  labelText: 'Count')),
+                          SizedBox(height: response.setHeight(10.0)),
+                          RaisedButton(
+                              color: Colors.blue[400],
+                              child: Text(
+                                'Save Details',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onPressed: () async {
+                                Random rnd = Random();
+                                DateTime defaultBestBefore = DateTime.now().add(Duration(hours: 24));
+                                var count = await DatabaseService().getFoodCount();
+                                await DatabaseService().setFoodData(
+                                    'food' + '${count['count']}'.padLeft(4, '0'), productName, user.email,
+                                    rnd.nextInt(10), Timestamp.now(), Timestamp.fromDate(defaultBestBefore), true, false, '', url
+                                );
+                                await DatabaseService().updateFoodCount(count['count'] + 1);
+                              }),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
