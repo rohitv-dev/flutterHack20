@@ -121,6 +121,7 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
   Widget build(BuildContext context) {
     User user = Provider.of<User>(context);
     return Scaffold(
+      appBar: AppBar(),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Padding(

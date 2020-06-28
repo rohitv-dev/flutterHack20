@@ -16,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    currentIndex = 0;
+    currentIndex = 2;
   }
 
   void changePage(int index) {
@@ -40,7 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => FoodRegisterScreen()));
+        },
         child: Icon(Icons.add, color: Colors.black),
         backgroundColor: Colors.white,
       ),
