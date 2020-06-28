@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hack20/screens/authentication/forgotPassword.dart';
 import 'package:hack20/services/auth.dart';
 import 'package:hack20/shared/loading.dart';
-import 'package:hack20/shared/textDecoration.dart';
 import 'package:response/response.dart';
 
 class SignIn extends StatefulWidget {
@@ -28,93 +26,145 @@ class _SignInState extends State<SignIn> {
     return loading
         ? Loading()
         : Scaffold(
-            appBar: AppBar(
-              elevation: 3.0,
-              title: Text('Sign In'),
-              actions: <Widget>[
-                FlatButton.icon(
-                  icon: Icon(Icons.person),
-                  label: Text('Register'),
-                  onPressed: () => widget.toggleView(),
-                ),
-              ],
-            ),
-            body: Container(
-              padding: EdgeInsets.symmetric(vertical: response.setHeight(20.0), horizontal: response.setWidth(23.0)),
-              child: Form(
-                key: _formKey,
+            backgroundColor: Colors.white,
+            body: SingleChildScrollView(
+              child: Container(
                 child: Column(
                   children: <Widget>[
-                    SizedBox(height: response.setHeight(20.0)),
-                    TextFormField(
-                      decoration:
-                          textInputDecoration.copyWith(hintText: 'Email', labelText: 'Email'),
-                      keyboardType: TextInputType.emailAddress,
-                      validator: (val) => val.isEmpty ? 'Enter an email' : null,
-                      onChanged: (val) {
-                        setState(() => email = val.replaceAll(' ', ''));
-                      },
-                    ),
-                    SizedBox(height: response.setHeight(20.0)),
-                    TextFormField(
-                      obscureText: true,
-                      decoration:
-                          textInputDecoration.copyWith(hintText: 'Password', labelText: 'Password'),
-                      validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
-                      onChanged: (val) {
-                        setState(() => password = val.replaceAll(' ', ''));
-                      },
-                    ),
-                    SizedBox(height: response.setHeight(20.0)),
                     Container(
-                      width: response.setWidth(300),
-                      child: RaisedButton(
-                          child: Text(
-                            'Sign In',
-                            style: TextStyle(color: Colors.white),
+                      height: 400,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/background.png'),
+                              fit: BoxFit.fill)),
+                      child: Stack(
+                        children: <Widget>[
+                          Positioned(
+                            left: 30,
+                            width: 80,
+                            height: 200,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage('assets/light-1.png'))),
+                            ),
                           ),
-                          onPressed: () async {
-                            if (_formKey.currentState.validate()) {
-                              setState(() => loading = true);
-                              dynamic result = await _auth
-                                  .signInWithEmailAndPassword(email, password);
-                              if (result == null) {
-                                setState(() {
-                                  loading = false;
-                                  error =
-                                      'Could not sign in with those credentials';
-                                });
-                              }
-                            }
-                          }),
+                          Positioned(
+                            left: 140,
+                            width: 80,
+                            height: 150,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage('assets/light-2.png'))),
+                            ),
+                          ),
+                          Positioned(
+                            right: 40,
+                            top: 40,
+                            width: 80,
+                            height: 150,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage('assets/clock.png'))),
+                            ),
+                          ),
+                          Positioned(
+                            child: Container(
+                              margin: EdgeInsets.only(top: 50),
+                              child: Center(
+                                child: Text(
+                                  "Login",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                    SizedBox(height: response.setHeight(12.0)),
-                    GestureDetector(
-                        child: Text('Forgot password?',
-                            style: TextStyle(fontSize: response.setFontSize(15.0))),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ForgotPassword()),
-                          );
-                        }),
-                    SizedBox(height: response.setHeight(12.0)),
-                    GestureDetector(
-                      child: Text('Not yet a user? Sign up!',
-                            style: TextStyle(color: Colors.blue, fontSize: response.setFontSize(16.0), decoration: TextDecoration.underline)),
-                      onTap: () {
-                        widget.toggleView();
-                      },
-                    ),
-                    Text(
-                      error,
-                      style: TextStyle(color: Colors.red, fontSize: response.setFontSize(14.0)),
-                    ),
+                    Padding(
+                      padding: EdgeInsets.all(30.0),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Color.fromRGBO(143, 148, 251, .2),
+                                      blurRadius: 20.0,
+                                      offset: Offset(0, 10))
+                                ]),
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  padding: EdgeInsets.all(8.0),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              color: Colors.grey[100]))),
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: "Email or Phone number",
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey[400])),
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: "Password",
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey[400])),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                gradient: LinearGradient(colors: [
+                                  Color.fromRGBO(143, 148, 251, 1),
+                                  Color.fromRGBO(143, 148, 251, .6),
+                                ])),
+                            child: Center(
+                              child: Text(
+                                "Login",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 70,
+                          ),
+                          Text(
+                            "Forgot Password?",
+                            style: TextStyle(
+                                color: Color.fromRGBO(143, 148, 251, 1)),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
-            ),
-          );
+            ));
   }
 }
