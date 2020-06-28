@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hack20/services/addressEdit.dart';
 import 'package:hack20/services/auth.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -60,7 +61,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   alignment: Alignment.centerRight,
                                   child: GestureDetector(
                                     onTap: () {
-                                      print('edit screen called');
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => AddressEdit()));
                                     },
                                     child: Icon(Icons.edit),
                                   )),

@@ -5,7 +5,6 @@ import 'package:hack20/screens/user/FoodRegisterScreen.dart';
 import 'package:hack20/screens/user/profileScreen.dart';
 import 'package:hack20/screens/user/userFoodHistory.dart';
 import 'package:hack20/services/auth.dart';
-import 'package:hack20/services/map.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -111,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
   _pageChange() {
     switch(currentIndex) {
       case 0:
-        return AddressMap();
+        return Container();
         break;
       case 1:
         return UserFoodHistory();
