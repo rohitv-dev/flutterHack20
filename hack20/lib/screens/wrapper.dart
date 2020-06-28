@@ -4,13 +4,14 @@ import 'package:hack20/screens/authentication/authenticate.dart';
 import 'package:hack20/screens/ngoScreen/ngoScreen.dart';
 import 'package:hack20/screens/user/homeScreen.dart';
 import 'package:hack20/services/roleVerification.dart';
+import 'package:hack20/shared/functions/networkCheck.dart';
 import 'package:provider/provider.dart';
 
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-
+    checkNetwork();
     if (user == null) {
       return Authenticate();
     } else {
