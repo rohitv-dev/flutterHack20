@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hack20/screens/user/FoodRegisterScreen.dart';
 import 'package:hack20/services/auth.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,9 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: Center(
-        child: Text('Home Page')
-      )
+      body: FoodRegisterScreen()
     );
   }
 }
