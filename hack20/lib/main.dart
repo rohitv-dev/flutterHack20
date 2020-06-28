@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hack20/homePage.dart';
 import 'package:hack20/models/userModel.dart';
+import 'package:hack20/screens/wrapper.dart';
 import 'package:hack20/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:response/response.dart';
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
               debugShowCheckedModeBanner: false,
               title: 'Hack 20 App',
-              home: HomePage()),
+              home: Wrapper()),
         ));
   }
 }
