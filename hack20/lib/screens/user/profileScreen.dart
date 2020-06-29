@@ -24,7 +24,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         context: context,
         builder: (context) {
           return Dialog(
-            child: SingleChildScrollView(
+              insetAnimationDuration: Duration(milliseconds: 1000),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  side: BorderSide(
+                    color: Colors.grey[800],
+                    width: 3,
+                  )),
+              elevation: 5.0,
+              child: SingleChildScrollView(
               child: Form(
                 key: _profFormKey,
                 child: Container(
@@ -104,7 +112,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     height: 210,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: Colors.green,
+                      gradient: LinearGradient(
+                          colors: [
+                            Color.fromRGBO(99, 107, 255, 1),
+                            Color.fromRGBO(130, 136, 255, 0.9),
+                          ]
+                      ),
                     ),
                   ),
                   Padding(
@@ -138,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       flex: 1,
                                       child: Icon(
                                         Icons.home,
-                                        color: Colors.green[500],
+                                        color: Color.fromRGBO(100, 120, 251, 1),
                                         size: 40.0,
                                       ),
                                     ),
