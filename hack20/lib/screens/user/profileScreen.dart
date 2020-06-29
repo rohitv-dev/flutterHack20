@@ -276,12 +276,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: <Widget>[
                           Icon(
                             Icons.exit_to_app,
-                            color: Colors.grey[200],
+                            color: Colors.grey[400],
                           ),
                           Text(
                             'Signout from my account',
                             style: TextStyle(
-                              color: Colors.grey[200],
+                              color: Colors.grey[400],
                             ),
                           ),
                         ],
