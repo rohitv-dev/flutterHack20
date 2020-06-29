@@ -147,7 +147,7 @@ class _AddressEditState extends State<AddressEdit> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18.0),
               ),
-              color: Colors.green,
+              color: Color.fromRGBO(100, 120, 251, 1),
               child: Text(
                 'Update',
                 style: TextStyle(color: Colors.white),
@@ -180,7 +180,7 @@ class _AddressEditState extends State<AddressEdit> {
                 overflow: Overflow.visible,
                 children: <Widget>[
                   SizedBox(
-                    height: 550,
+                    height: 480,
                     width: 350,
                     child: Container(
                       decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(20)),
@@ -393,7 +393,7 @@ class _AddressEditState extends State<AddressEdit> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
                         ),
-                        color: _isChecked ? Colors.green : Colors.grey,
+                        color: _isChecked ? Colors.green : Color.fromRGBO(100, 120, 251, 1),
                         child: Text(
                           'Save',
                           style: TextStyle(color: Colors.white),

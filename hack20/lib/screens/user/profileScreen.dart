@@ -75,7 +75,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),
                             ),
-                            color: Colors.green,
+                            color: Color.fromRGBO(100, 120, 251, 1),
                             child: Text(
                               'Update',
                               style: TextStyle(color: Colors.white),
