@@ -18,8 +18,7 @@ class FoodRegisterScreen extends StatefulWidget {
   final String productDesc;
   final int count;
 
-  FoodRegisterScreen(
-      {this.url, this.productName, this.productDesc, this.count});
+  FoodRegisterScreen({this.url, this.productName, this.productDesc, this.count});
 
   @override
   _FoodRegisterScreenState createState() => _FoodRegisterScreenState();
@@ -115,8 +114,7 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
     if (imageFile == null) {
       return Center(child: Text("No Image Selected"));
     } else {
-      return Image.file(imageFile,
-          height: response.setHeight(170.0), width: response.setWidth(170.0));
+      return Image.file(imageFile, height: response.setHeight(170.0), width: response.setWidth(170.0));
     }
   }
 
@@ -162,9 +160,7 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                               onChanged: (val) {
                                 setState(() => productName = val);
                               },
-                              decoration: textInputDecoration.copyWith(
-                                  hintText: 'Product Name',
-                                  labelText: 'Product Name')),
+                              decoration: textInputDecoration.copyWith(hintText: 'Product Name', labelText: 'Product Name')),
                           SizedBox(height: response.setHeight(10.0)),
                           TextFormField(
                               keyboardType: TextInputType.multiline,
@@ -172,17 +168,14 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                                 setState(() => productDesc = val);
                               },
                               maxLines: null,
-                              decoration: textInputDecoration.copyWith(
-                                  hintText: 'Product Description',
-                                  labelText: 'Product Description')),
+                              decoration: textInputDecoration.copyWith(hintText: 'Product Description', labelText: 'Product Description')),
                           SizedBox(height: response.setHeight(10.0)),
                           TextFormField(
                               keyboardType: TextInputType.number,
                               onChanged: (val) {
                                 setState(() => count = int.parse(val));
                               },
-                              decoration: textInputDecoration.copyWith(
-                                  hintText: 'Count', labelText: 'Count')),
+                              decoration: textInputDecoration.copyWith(hintText: 'Count', labelText: 'Count')),
                           SizedBox(height: response.setHeight(10.0)),
                           RaisedButton(
                               color: Colors.blue[400],
@@ -191,25 +184,10 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                                 style: TextStyle(color: Colors.white),
                               ),
                               onPressed: () async {
-                                DateTime defaultBestBefore =
-                                    DateTime.now().add(Duration(hours: 24));
-                                var foodCount =
-                                    await DatabaseService().getFoodCount();
-                                await DatabaseService().setFoodData(
-                                    '${foodCount['count'] + 1}',
-                                    productName,
-                                    user.email,
-                                    0.0,
-                                    0.0,
-                                    count,
-                                    Timestamp.now(),
-                                    Timestamp.fromDate(defaultBestBefore),
-                                    true,
-                                    false,
-                                    '',
-                                    url);
-                                await DatabaseService()
-                                    .updateFoodCount(foodCount['count'] + 1);
+                                DateTime defaultBestBefore = DateTime.now().add(Duration(hours: 24));
+                                var foodCount = await DatabaseService().getFoodCount();
+                                await DatabaseService().setFoodData('${foodCount['count'] + 1}', productName, user.email, 0.0, 0.0, count, Timestamp.now(), Timestamp.fromDate(defaultBestBefore), true, '', url);
+                                await DatabaseService().updateFoodCount(foodCount['count'] + 1);
                               }),
                         ],
                       ),
