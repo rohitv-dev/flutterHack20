@@ -220,17 +220,22 @@ class _AddressEditState extends State<AddressEdit> {
                     ),
                   ),
                   SizedBox(height: 20.0),
-                  Text(
-                    'Address',
-                    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 20.0),
-                  SizedBox(
-                    width: 300,
-                    child: Container(
-                      child: Column(
-                        children: <Widget>[
-                          GestureDetector(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(flex: 1, child: Text('  ')),
+                      Expanded(
+                        flex: 1,
+                        child: Text(
+                          '    Address',
+                          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          alignment: Alignment.centerRight,
+                          child: GestureDetector(
                             onTap: () {
                               _showUpdatePanel(addressData);
                             },
@@ -239,6 +244,17 @@ class _AddressEditState extends State<AddressEdit> {
                               size: 27.0,
                             ),
                           ),
+                        ),
+                      ),
+                      SizedBox(width:10.0),
+                    ],
+                  ),
+                  SizedBox(height: 20.0),
+                  SizedBox(
+                    width: 300,
+                    child: Container(
+                      child: Column(
+                        children: <Widget>[
                           SizedBox(height: 10.0),
                           Row(
                             children: <Widget>[
@@ -425,7 +441,7 @@ class _AddressEditState extends State<AddressEdit> {
             Center(
               child: Icon(
                 Icons.location_on,
-                color: iconColor,
+                color: Color.fromRGBO(100, 120, 251, 1),
                 size: 40.0,
               ),
             ),
