@@ -26,17 +26,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey[500],
-                          blurRadius: 10.0,
-                          spreadRadius: 0.0,
-                          offset: Offset(2.0, 2.0), // shadow direction: bottom right
-                        )
-                      ],
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.0)),
+                  decoration: BoxDecoration(boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey[500],
+                      blurRadius: 10.0,
+                      spreadRadius: 0.0,
+                      offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                    )
+                  ], color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
                   height: 200,
                   width: MediaQuery.of(context).size.width,
                   child: Padding(
@@ -89,8 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsets.only(left: 30.0, top: 10.0),
+                          padding: const EdgeInsets.only(left: 30.0, top: 10.0),
                           child: Row(
                             children: <Widget>[
                               SizedBox(
@@ -112,8 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsets.only(left: 30.0, top: 10.0),
+                          padding: const EdgeInsets.only(left: 30.0, top: 10.0),
                           child: Row(
                             children: <Widget>[
                               SizedBox(
@@ -135,8 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsets.only(left: 30.0, top: 10.0),
+                          padding: const EdgeInsets.only(left: 30.0, top: 10.0),
                           child: Row(
                             children: <Widget>[
                               SizedBox(
@@ -196,17 +190,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       transform: Matrix4.translationValues(0.0, -50.0, 0.0),
                       width: 100,
                       height: 100,
-                      decoration: new BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.grey[200],
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey[500],
-                              blurRadius: 10.0,
-                              spreadRadius: 0.0,
-                              offset: Offset(2.0, 2.0), // shadow direction: bottom right
-                            )
-                          ]),
+                      decoration: new BoxDecoration(shape: BoxShape.circle, color: Colors.grey[200], boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey[500],
+                          blurRadius: 10.0,
+                          spreadRadius: 0.0,
+                          offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                        )
+                      ]),
                       child: Icon(
                         Icons.person,
                         size: 70,
@@ -242,8 +233,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         padding: const EdgeInsets.only(top: 20.0),
                         child: Text(
                           'Hemantharajan',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                       ),
                       Padding(
@@ -264,8 +254,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   children: <Widget>[
                                     Text(
                                       'sample@gmail.com',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                      style: TextStyle(fontWeight: FontWeight.bold),
                                     ),
                                     Text(
                                       'Email',
@@ -279,8 +268,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: <Widget>[
                                 Text(
                                   '9940632194',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 Text(
                                   'Phone',

@@ -11,30 +11,17 @@ class DatabaseService {
   final CollectionReference _counterCollection = Firestore.instance.collection('counter');
 
   Future updateFoodCount(int count) async {
-    return await _counterCollection.document('foodId').setData({'count': count });
+    return await _counterCollection.document('foodId').setData({'count': count});
   }
 
   Future getFoodCount() async {
     return await _counterCollection.document('foodId').snapshots().first;
   }
 
-  Future setFoodData(
-      String id, String name, String email, double latitude, double longitude,
-      int quantity, Timestamp notifiedTime, Timestamp bestBeforeTime,
-      bool hasBeenPickedUp, String pickedBy, String imageUrl) async {
-    return _foodCollection.document('food' + id.padLeft(4, '0')).setData({
-      'id': id,
-      'name': name,
-      'email': email,
-      'latitude': latitude,
-      'longitude': longitude,
-      'quantity': quantity,
-      'notifiedTime': notifiedTime,
-      'bestBeforeTime': bestBeforeTime,
-      'hasBeenPickedUp': hasBeenPickedUp,
-      'pickedBy': pickedBy,
-      'imageUrl': imageUrl
-    });
+  Future setFoodData(String id, String name, String email, double latitude, double longitude, int quantity, Timestamp notifiedTime, Timestamp bestBeforeTime, bool hasBeenPickedUp, String pickedBy, String imageUrl) async {
+    return _foodCollection
+        .document('food' + id.padLeft(4, '0'))
+        .setData({'id': id, 'name': name, 'email': email, 'latitude': latitude, 'longitude': longitude, 'quantity': quantity, 'notifiedTime': notifiedTime, 'bestBeforeTime': bestBeforeTime, 'hasBeenPickedUp': hasBeenPickedUp, 'pickedBy': pickedBy, 'imageUrl': imageUrl});
   }
 
   List<Food> _foodListFromSnapshot(QuerySnapshot snapshot) {
@@ -50,8 +37,7 @@ class DatabaseService {
           bestBeforeTime: doc.data['bestBeforeTime'] ?? Timestamp.now(),
           hasBeenPickedUp: doc.data['hasBeenPickedUp'] ?? false,
           pickedBy: doc.data['pickedBy'] ?? '',
-          imageUrl: doc.data['imageUrl'] ?? ''
-      );
+          imageUrl: doc.data['imageUrl'] ?? '');
     }).toList();
   }
 

@@ -1,6 +1,7 @@
 import 'dart:io';
-
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hack20/models/userModel.dart';
 import 'package:hack20/services/database.dart';
@@ -67,7 +68,7 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
 
     Navigator.of(context).pop();
 
-    String fileName=basename(imageFile.path);
+    String fileName = basename(imageFile.path);
 
     StorageReference reference = storage.ref().child("productImages/$fileName");
 
@@ -78,7 +79,6 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
     url = await taskSnapshot.ref.getDownloadURL();
 
     print("URL String :" + url);
-
   }
 
   Future<void> _showChoiceDialog(BuildContext context) {
@@ -112,9 +112,9 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
 
   Widget _decideImageView() {
     if (imageFile == null) {
-      return Text("No Image Selected");
+      return Center(child: Text("No Image Selected"));
     } else {
-      return Image.file(imageFile, width: response.setWidth(200.0), height: response.setHeight(200.0));
+      return Image.file(imageFile, height: response.setHeight(170.0), width: response.setWidth(170.0));
     }
   }
 
@@ -168,8 +168,7 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                                 setState(() => productDesc = val);
                               },
                               maxLines: null,
-                              decoration: textInputDecoration.copyWith(hintText: 'Product Description', labelText: 'Product Description')
-                          ),
+                              decoration: textInputDecoration.copyWith(hintText: 'Product Description', labelText: 'Product Description')),
                           SizedBox(height: response.setHeight(10.0)),
                           TextFormField(
                               keyboardType: TextInputType.number,
@@ -187,12 +186,8 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                               onPressed: () async {
                                 DateTime defaultBestBefore = DateTime.now().add(Duration(hours: 24));
                                 var foodCount = await DatabaseService().getFoodCount();
-                                await DatabaseService().setFoodData(
-                                    '${foodCount['count'] + 1}', productName, user.email, 0.0, 0.0,
-                                    count, Timestamp.now(), Timestamp.fromDate(defaultBestBefore), false, '', url
-                                );
+                                await DatabaseService().setFoodData('${foodCount['count'] + 1}', productName, user.email, 0.0, 0.0, count, Timestamp.now(), Timestamp.fromDate(defaultBestBefore), true, '', url);
                                 await DatabaseService().updateFoodCount(foodCount['count'] + 1);
-                                Navigator.pop(context);
                               }),
                         ],
                       ),
