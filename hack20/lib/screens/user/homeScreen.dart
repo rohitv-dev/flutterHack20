@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hack20/screens/user/FoodRegisterScreen.dart';
 import 'package:hack20/screens/user/profileScreen.dart';
 import 'package:hack20/screens/user/userFoodHistory.dart';
-import 'package:hack20/services/auth.dart';
+import 'package:hack20/screens/user/userHomeScreen.dart';
+import 'package:response/response.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex;
-  String title = 'Home Page';
+  final response = ResponseUI.instance;
 
   @override
   void initState() {
@@ -23,8 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void changePage(int index) {
     setState(() {
-      if (index == 1) title = 'Food History';
-      if (index == 2) title = 'Profile';
       currentIndex = index;
     });
   }
@@ -32,64 +31,58 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Log Out'),
-              onPressed: () {
-                AuthService().signOut();
-              },
-            )
-          ],
-        ),
+        resizeToAvoidBottomInset: false,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => FoodRegisterScreen()));
           },
-          child: Icon(Icons.add, color: Colors.black),
-          backgroundColor: Colors.white,
+          child: Icon(Icons.add),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        bottomNavigationBar: BubbleBottomBar(hasNotch: true, fabLocation: BubbleBottomBarFabLocation.end, opacity: 0.2, currentIndex: currentIndex, onTap: changePage, borderRadius: BorderRadius.vertical(top: Radius.circular(16)), elevation: 8.0, items: <BubbleBottomBarItem>[
+        bottomNavigationBar: BubbleBottomBar(
+            hasNotch: true, fabLocation: BubbleBottomBarFabLocation.end, opacity: 0.2, currentIndex: currentIndex, onTap: changePage, borderRadius: BorderRadius.vertical(top: Radius.circular(16)), elevation: 8.0,
+            items: <BubbleBottomBarItem>[
           BubbleBottomBarItem(
-            backgroundColor: Colors.red,
-            icon: Icon(Icons.dashboard, color: Colors.black),
+            backgroundColor: Color.fromRGBO(80, 90, 255, 1),
+            icon: Icon(Icons.dashboard, color: Color.fromRGBO(50, 60, 255, 1)),
             activeIcon: Icon(
               Icons.dashboard,
-              color: Colors.red,
+              color: Color.fromRGBO(50, 60, 255, 1),
             ),
             title: Text('Home'),
           ),
           BubbleBottomBarItem(
-            backgroundColor: Colors.red,
-            icon: Icon(Icons.history, color: Colors.black),
+            backgroundColor: Color.fromRGBO(80, 90, 255, 1),
+            icon: Icon(Icons.history, color: Color.fromRGBO(50, 60, 255, 1)),
             activeIcon: Icon(
               Icons.history,
-              color: Colors.red,
+              color: Color.fromRGBO(50, 60, 255, 1),
             ),
             title: Text('History'),
           ),
           BubbleBottomBarItem(
-            backgroundColor: Colors.red,
-            icon: Icon(Icons.account_circle, color: Colors.black),
+            backgroundColor: Color.fromRGBO(80, 90, 255, 1),
+            icon: Icon(Icons.account_circle, color: Color.fromRGBO(50, 60, 255, 1)),
             activeIcon: Icon(
               Icons.account_circle,
-              color: Colors.red,
+              color: Color.fromRGBO(50, 60, 255, 1),
             ),
             title: Text('Settings'),
           )
         ]),
-        body: _pageChange());
+        body: Container(
+          child: _pageChange()
+        )
+    );
   }
 
   _pageChange() {
     switch (currentIndex) {
       case 0:
-        return Container(child: Center(child: Text('Home Screen')));
+        return UserHomeScreen();
         break;
       case 1:
-        return Container(child: Center(child: Text('History')));
+        return UserFoodHistory();
         break;
       case 2:
         return ProfileScreen();

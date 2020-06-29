@@ -5,10 +5,10 @@ import 'package:hack20/models/userModel.dart';
 import 'package:hack20/screens/ngoScreen/ngoAvailableFood.dart';
 import 'package:hack20/screens/ngoScreen/ngoFoodHistory.dart';
 import 'package:hack20/screens/user/profileScreen.dart';
-import 'package:hack20/services/auth.dart';
 import 'package:hack20/services/database.dart';
 import 'package:hack20/shared/functions/displayToast.dart';
 import 'package:provider/provider.dart';
+import 'package:response/response.dart';
 
 class NgoScreen extends StatefulWidget {
   @override
@@ -33,20 +33,10 @@ class _NgoScreenState extends State<NgoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final response = ResponseUI.instance;
     User user = Provider.of<User>(context);
     addressCheck = DatabaseService(uid: user.uid).userNgosAddressData;
     return Scaffold(
-        appBar: AppBar(
-          title: Text('NGO Screen'),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Log Out', style: TextStyle(color: Colors.white)),
-              onPressed: () {
-                AuthService().signOut();
-              },
-            )
-          ],
-        ),
         bottomNavigationBar: BubbleBottomBar(
             hasNotch: false,
             fabLocation: BubbleBottomBarFabLocation.end,
@@ -57,54 +47,44 @@ class _NgoScreenState extends State<NgoScreen> {
             elevation: 8.0,
             items: <BubbleBottomBarItem>[
               BubbleBottomBarItem(
-                backgroundColor: Colors.red,
-                icon: Icon(
-                    Icons.dashboard,
-                    color: Colors.black
-                ),
+                backgroundColor: Color.fromRGBO(80, 90, 255, 1),
+                icon: Icon(Icons.dashboard, color: Color.fromRGBO(50, 60, 255, 1)),
                 activeIcon: Icon(
                   Icons.dashboard,
-                  color: Colors.red,
+                  color: Color.fromRGBO(50, 60, 255, 1),
                 ),
                 title: Text('Home'),
               ),
               BubbleBottomBarItem(
-                backgroundColor: Colors.red,
-                icon: Icon(
-                    Icons.history,
-                    color: Colors.black
-                ),
+                backgroundColor: Color.fromRGBO(80, 90, 255, 1),
+                icon: Icon(Icons.history, color: Color.fromRGBO(50, 60, 255, 1)),
                 activeIcon: Icon(
                   Icons.history,
-                  color: Colors.red,
+                  color: Color.fromRGBO(50, 60, 255, 1),
                 ),
                 title: Text('History'),
               ),
               BubbleBottomBarItem(
-                backgroundColor: Colors.red,
-                icon: Icon(
-                    Icons.account_circle,
-                    color: Colors.black
-                ),
+                backgroundColor: Color.fromRGBO(80, 90, 255, 1),
+                icon: Icon(Icons.account_circle, color: Color.fromRGBO(50, 60, 255, 1)),
                 activeIcon: Icon(
                   Icons.account_circle,
-                  color: Colors.red,
+                  color: Color.fromRGBO(50, 60, 255, 1),
                 ),
                 title: Text('Settings'),
               )
             ]
         ),
-        body: _pageChange()
+        body: Container(
+            child: _pageChange()
+    )
     );
   }
 
   _pageChange() {
     switch (currentIndex) {
       case 0:
-        if (addressCheck == null) {
-          showLongToast('Please add an address', 2);
-          return Container();
-        } else return NGOAvailableFood();
+        return NGOAvailableFood();
         break;
       case 1:
         return NGOFoodHistory();
