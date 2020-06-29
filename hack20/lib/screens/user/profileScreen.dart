@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hack20/models/sharedModel.dart';
 import 'package:hack20/models/userModel.dart';
 import 'package:hack20/services/addressEdit.dart';
+import 'package:hack20/services/auth.dart';
 import 'package:hack20/services/database.dart';
 import 'package:hack20/shared/loading.dart';
 import 'package:hack20/shared/textDecoration.dart';
@@ -13,6 +14,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     User user = Provider.of<User>(context);
@@ -121,7 +123,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 90.0, left: 20.0, right: 20),
+                    padding: const EdgeInsets.only(top: 160.0, left: 20.0, right: 20),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -263,11 +265,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                   ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 30),
+                    child: GestureDetector(
+                      onTap: () async{
+                        await _auth.signOut();
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.exit_to_app,
+                            color: Colors.grey[200],
+                          ),
+                          Text(
+                            'Signout from my account',
+                            style: TextStyle(
+                              color: Colors.grey[200],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
               Container(
                 alignment: Alignment.topCenter,
-                padding: EdgeInsets.only(top: 70, right: 20.0, left: 20.0),
+                padding: EdgeInsets.only(top: 130, right: 20.0, left: 20.0),
                 child: Container(
                   height: 200.0,
                   width: MediaQuery.of(context).size.width,
