@@ -24,7 +24,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         context: context,
         builder: (context) {
           return Dialog(
-            child: SingleChildScrollView(
+              insetAnimationDuration: Duration(milliseconds: 1000),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  side: BorderSide(
+                    color: Colors.grey[800],
+                    width: 3,
+                  )),
+              elevation: 5.0,
+              child: SingleChildScrollView(
               child: Form(
                 key: _profFormKey,
                 child: Container(
