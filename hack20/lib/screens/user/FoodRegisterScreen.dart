@@ -143,13 +143,12 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Container(
-                  height: response.setHeight(250),
+                  height:MediaQuery.of(context).size.height / 2,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       InkWell(
                         child: Container(
-                            height: MediaQuery.of(context).size.height / 2,
+                            //height: MediaQuery.of(context).size.height / 2,
                             width: MediaQuery.of(context).size.width,
                             child: FittedBox(
                               child: _decideImageView(),
@@ -176,7 +175,6 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
-                          SizedBox(height: response.setHeight(10.0)),
                           TextFormField(
                               onChanged: (val) {
                                 setState(() => productName = val);
@@ -213,7 +211,7 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                           ),
                           SizedBox(height: response.setHeight(10.0)),
                           RaisedButton(
-                              color: Colors.blue,
+                              color:  Color.fromRGBO(100, 120, 251, 1),
                               child: Text(
                                 'Save Details',
                                 style: TextStyle(color: Colors.white),
