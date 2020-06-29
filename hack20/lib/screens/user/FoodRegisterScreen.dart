@@ -68,7 +68,7 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
 
     Navigator.of(context).pop();
 
-    String fileName=basename(imageFile.path);
+    String fileName = basename(imageFile.path);
 
     StorageReference reference = storage.ref().child("productImages/$fileName");
 
@@ -79,7 +79,6 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
     url = await taskSnapshot.ref.getDownloadURL();
 
     print("URL String :" + url);
-
   }
 
   Future<void> _showChoiceDialog(BuildContext context) {
@@ -115,7 +114,7 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
 
   Widget _decideImageView() {
     if (imageFile == null) {
-      return Image.asset('assets/upload.jpg',width: 100, height: 100);
+      return Image.asset('assets/upload.jpg');
     } else {
       return Image.file(imageFile);
     }
@@ -126,7 +125,8 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
     User user = Provider.of<User>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Food Details',
+        title: Text(
+          'Food Details',
           style: TextStyle(
             fontSize: 20.0,
           ),
@@ -134,112 +134,104 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
       ),
       resizeToAvoidBottomInset: true,
       body: StreamBuilder<UserNGOAddress>(
-        stream: DatabaseService(uid: user.uid).userNgosAddressData,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) return Loading();
-          UserNGOAddress addressData = snapshot.data;
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(
-                  height:MediaQuery.of(context).size.height / 2,
-                  child: Column(
-                    children: <Widget>[
-                      InkWell(
-                        child: Container(
-                            //height: MediaQuery.of(context).size.height / 2,
-                            width: MediaQuery.of(context).size.width,
-                            child: FittedBox(
-                              child: _decideImageView(),
-                              fit: BoxFit.fill,
-                            )
+          stream: DatabaseService(uid: user.uid).userNgosAddressData,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return Loading();
+            UserNGOAddress addressData = snapshot.data;
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Container(
+                    child: Column(
+                      children: <Widget>[
+                        InkWell(
+                          child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              child: FittedBox(
+                                child: _decideImageView(),
+                                fit: BoxFit.fill,
+                              )),
+                          onTap: () {
+                            _showChoiceDialog(context);
+                          },
                         ),
-                        onTap: () {
-                          _showChoiceDialog(context);
-                        },
-                      ),
-
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Card(
-                  elevation: 5,
-                  margin: EdgeInsets.all(10.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  child: Container(
-                    padding: EdgeInsets.all(20.0),
-                    child: Form(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          TextFormField(
+                  Card(
+                    elevation: 5,
+                    margin: EdgeInsets.all(10.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.all(20.0),
+                      child: Form(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            TextFormField(
                               onChanged: (val) {
                                 setState(() => productName = val);
                               },
-                            decoration: textInputDecoration.copyWith(
-                              hintText: 'Item Name',
-                              labelText: 'Item Name',
-                              labelStyle: TextStyle(color: Colors.grey),
+                              decoration: textInputDecoration.copyWith(
+                                hintText: 'Item Name',
+                                labelText: 'Item Name',
+                                labelStyle: TextStyle(color: Colors.grey),
+                              ),
                             ),
-                          ),
-                          SizedBox(height: response.setHeight(10.0)),
-                          TextFormField(
+                            SizedBox(height: response.setHeight(10.0)),
+                            TextFormField(
                               keyboardType: TextInputType.multiline,
                               onChanged: (val) {
                                 setState(() => productDesc = val);
                               },
                               maxLines: null,
-                            decoration: textInputDecoration.copyWith(
-                              hintText: 'Item Description',
-                              labelText: 'Item Description',
-                              labelStyle: TextStyle(color: Colors.grey),
+                              decoration: textInputDecoration.copyWith(
+                                hintText: 'Item Description',
+                                labelText: 'Item Description',
+                                labelStyle: TextStyle(color: Colors.grey),
+                              ),
                             ),
-                          ),
-                          SizedBox(height: response.setHeight(10.0)),
-                          TextFormField(
+                            SizedBox(height: response.setHeight(10.0)),
+                            TextFormField(
                               keyboardType: TextInputType.number,
                               onChanged: (val) {
                                 setState(() => count = int.parse(val));
                               },
-                            decoration: textInputDecoration.copyWith(
-                              hintText: 'Serves(No.of Persons)', labelText: 'Serves(No.of Persons)',
-                              labelStyle: TextStyle(color: Colors.grey),
+                              decoration: textInputDecoration.copyWith(
+                                hintText: 'Serves(No.of Persons)',
+                                labelText: 'Serves(No.of Persons)',
+                                labelStyle: TextStyle(color: Colors.grey),
+                              ),
                             ),
-                          ),
-                          SizedBox(height: response.setHeight(10.0)),
-                          RaisedButton(
-                              color:  Color.fromRGBO(100, 120, 251, 1),
-                              child: Text(
-                                'Save Details',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                              ),
-                              onPressed: () async {
-                                DateTime defaultBestBefore = DateTime.now().add(Duration(hours: 24));
-                                var foodCount = await DatabaseService().getFoodCount();
-                                await DatabaseService().setFoodData(
-                                    '${foodCount['count'] + 1}', productName, user.email, addressData.latitude, addressData.longitude,
-                                    count, Timestamp.now(), Timestamp.fromDate(defaultBestBefore), false, '', url
-                                );
-                                await DatabaseService().updateFoodCount(foodCount['count'] + 1);
-                                Navigator.pop(context);
-                              }),
-                        ],
+                            SizedBox(height: response.setHeight(10.0)),
+                            RaisedButton(
+                                color: Color.fromRGBO(100, 120, 251, 1),
+                                child: Text(
+                                  'Save Details',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ),
+                                onPressed: () async {
+                                  DateTime defaultBestBefore = DateTime.now().add(Duration(hours: 24));
+                                  var foodCount = await DatabaseService().getFoodCount();
+                                  await DatabaseService().setFoodData('${foodCount['count'] + 1}', productName, user.email, addressData.latitude, addressData.longitude, count, Timestamp.now(), Timestamp.fromDate(defaultBestBefore), false, '', url);
+                                  await DatabaseService().updateFoodCount(foodCount['count'] + 1);
+                                  Navigator.pop(context);
+                                }),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          );
-        }
-      ),
+                ],
+              ),
+            );
+          }),
     );
   }
 }
-
