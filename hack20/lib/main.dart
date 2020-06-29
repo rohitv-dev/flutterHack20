@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
-                primaryColor: Colors.white,
-                buttonColor: Colors.pink
+                primaryColor: Color.fromRGBO(100, 120, 251, 1),
+                accentColor: Color.fromRGBO(90, 100, 251, 1)
               ),
               title: 'Hack 20 App',
               home: Wrapper()),

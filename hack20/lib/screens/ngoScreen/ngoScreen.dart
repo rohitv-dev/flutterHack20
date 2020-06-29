@@ -1,9 +1,14 @@
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hack20/models/userModel.dart';
 import 'package:hack20/screens/ngoScreen/ngoAvailableFood.dart';
 import 'package:hack20/screens/ngoScreen/ngoFoodHistory.dart';
+import 'package:hack20/screens/user/profileScreen.dart';
 import 'package:hack20/services/auth.dart';
+import 'package:hack20/services/database.dart';
+import 'package:hack20/shared/functions/displayToast.dart';
+import 'package:provider/provider.dart';
 
 class NgoScreen extends StatefulWidget {
   @override
@@ -12,6 +17,7 @@ class NgoScreen extends StatefulWidget {
 
 class _NgoScreenState extends State<NgoScreen> {
   int currentIndex;
+  var addressCheck;
 
   @override
   void initState() {
@@ -27,6 +33,8 @@ class _NgoScreenState extends State<NgoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    User user = Provider.of<User>(context);
+    addressCheck = DatabaseService(uid: user.uid).userNgosAddressData;
     return Scaffold(
         appBar: AppBar(
           title: Text('NGO Screen'),
@@ -93,15 +101,16 @@ class _NgoScreenState extends State<NgoScreen> {
   _pageChange() {
     switch (currentIndex) {
       case 0:
-        return NGOAvailableFood();
+        if (addressCheck == null) {
+          showLongToast('Please add an address', 2);
+          return Container();
+        } else return NGOAvailableFood();
         break;
       case 1:
         return NGOFoodHistory();
         break;
       case 2:
-        return Container(
-            child: Center(child: Text('Profile'))
-        );
+        return ProfileScreen();
         break;
     }
   }

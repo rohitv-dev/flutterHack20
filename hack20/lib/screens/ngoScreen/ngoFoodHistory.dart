@@ -20,7 +20,7 @@ class _NGOFoodHistoryState extends State<NGOFoodHistory> {
             itemCount: ngoFood.length,
             itemBuilder: (context, index) {
               return Card(
-                child: Text(ngoFood[index].pickedBy)
+                child: Text(ngoFood[index].name)
               );
             }
           );
