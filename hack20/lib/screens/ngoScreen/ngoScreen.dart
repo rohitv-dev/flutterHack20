@@ -76,16 +76,7 @@ class _NgoScreenState extends State<NgoScreen> {
             ]
         ),
         body: Container(
-        width: response.screenWidth,
-        height: response.screenHeight,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [Color.fromRGBO(99, 107, 255, 1), Color.fromRGBO(130, 136, 255, 0.9)]
-          ),
-        ),
-        child: _pageChange()
+            child: _pageChange()
     )
     );
   }

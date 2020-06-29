@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hack20/screens/user/FoodRegisterScreen.dart';
 import 'package:hack20/screens/user/profileScreen.dart';
 import 'package:hack20/screens/user/userFoodHistory.dart';
+import 'package:hack20/screens/user/userHomeScreen.dart';
 import 'package:response/response.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,19 +14,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex;
-  String title = 'Home Page';
   final response = ResponseUI.instance;
 
   @override
   void initState() {
     super.initState();
-    currentIndex = 1;
+    currentIndex = 0;
   }
 
   void changePage(int index) {
     setState(() {
-      if (index == 1) title = 'Food History';
-      if (index == 2) title = 'Profile';
       currentIndex = index;
     });
   }
@@ -73,15 +71,6 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ]),
         body: Container(
-            width: response.screenWidth,
-            height: response.screenHeight,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [Color.fromRGBO(99, 107, 255, 1), Color.fromRGBO(130, 136, 255, 0.9)]
-              ),
-            ),
           child: _pageChange()
         )
     );
@@ -90,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
   _pageChange() {
     switch (currentIndex) {
       case 0:
-        return Container(child: Center(child: Text('Home Screen')));
+        return UserHomeScreen();
         break;
       case 1:
         return UserFoodHistory();
