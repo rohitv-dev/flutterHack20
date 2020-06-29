@@ -71,6 +71,7 @@ flutter:
     - assets/light-1.png
     - assets/light-2.png
     - assets/theme.png
+    - assets/upload.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
