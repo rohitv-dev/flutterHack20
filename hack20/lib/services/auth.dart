@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hack20/models/userModel.dart';
 import 'package:hack20/services/database.dart';
 import 'package:hack20/services/roleVerification.dart';
-import 'package:hack20/services/storage.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -38,6 +37,7 @@ class AuthService {
       FirebaseUser user = result.user;
       await AccountVerification().addSingleRole(email, role);
       await DatabaseService(uid: user.uid).setAddressData('address', '', '', '', '', '', 0.0, 0.0);
+      await DatabaseService(uid: user.uid).setProfileData('', '');
       return _userFromFirebaseUser(user);
     } catch (error) {
       print(error.toString());

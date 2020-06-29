@@ -40,6 +40,20 @@ class DatabaseService {
     });
   }
 
+  Future setProfileData(String userName, String phoneNumber) async {
+    return await _usersNgosCollection.document(uid).setData({
+      'userName': userName,
+      'phoneNumber': phoneNumber
+    });
+  }
+
+  Future updateProfileData(String userName, String phoneNumber) async {
+    return await _usersNgosCollection.document(uid).updateData({
+      'userName': userName,
+      'phoneNumber': phoneNumber
+    });
+  }
+
 
   UserNGOAddress _userAddressFromSnapshot(DocumentSnapshot snapshot) {
     return UserNGOAddress(
@@ -51,6 +65,13 @@ class DatabaseService {
       pinCode: snapshot.data['pincode'] ?? '',
       latitude: snapshot.data['latitude'] ?? 12.837605,
       longitude: snapshot.data['longitude'] ?? 80.205146,
+    );
+  }
+
+  UserProfile _userProfileFromSnapshot(DocumentSnapshot snapshot) {
+    return UserProfile(
+      userName: snapshot.data['userName'],
+      phoneNumber: snapshot.data['phoneNumber']
     );
   }
 
@@ -113,5 +134,9 @@ class DatabaseService {
 
   Stream<UserNGOAddress> get userNgosAddressData {
     return _usersNgosCollection.document(uid).collection('address').document('address').snapshots().map(_userAddressFromSnapshot);
+  }
+
+  Stream<UserProfile> get userProfileData {
+    return _usersNgosCollection.document(uid).snapshots().map(_userProfileFromSnapshot);
   }
 }
