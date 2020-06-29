@@ -9,7 +9,6 @@ class Food {
   final int quantity;
   final Timestamp notifiedTime;
   final Timestamp bestBeforeTime;
-  final bool isReady;
   final bool hasBeenPickedUp;
   final String pickedBy;
   final String imageUrl;
@@ -23,7 +22,6 @@ class Food {
     this.quantity,
     this.notifiedTime,
     this.bestBeforeTime,
-    this.isReady,
     this.hasBeenPickedUp,
     this.pickedBy,
     this.imageUrl

@@ -47,7 +47,7 @@ dependencies:
   path: ^1.6.4
   bubble_bottom_bar: ^1.2.0
   flutter_staggered_animations: ^0.1.2
-  simple_animations: ^2.2.1
+  basic_utils: ^2.5.3
 
 dev_dependencies:
   flutter_test:
