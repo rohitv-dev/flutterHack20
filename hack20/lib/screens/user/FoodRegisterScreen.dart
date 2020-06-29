@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hack20/models/sharedModel.dart';
@@ -30,7 +31,7 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
   String productDesc;
   int count;
 
-  var response = ResponseUI.instance;
+  final res = ResponseUI.instance;
 
   static FirebaseStorage storage = FirebaseStorage.instance;
 
@@ -98,7 +99,7 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                       _openGallery(context);
                     },
                   ),
-                  Padding(padding: EdgeInsets.all(response.setFontSize(15.0))),
+                  Padding(padding: EdgeInsets.all(res.setFontSize(15.0))),
                   GestureDetector(
                     child: Text("Camera"),
                     onTap: () {
@@ -124,114 +125,135 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
   Widget build(BuildContext context) {
     User user = Provider.of<User>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Food Details',
-          style: TextStyle(
-            fontSize: 20.0,
+      resizeToAvoidBottomInset: true,
+      body: Container(
+        width: res.screenWidth,
+        height: res.screenHeight,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Color.fromRGBO(99, 107, 255, 1), Color.fromRGBO(130, 136, 255, 0.9)]
           ),
         ),
-      ),
-      resizeToAvoidBottomInset: true,
-      body: StreamBuilder<UserNGOAddress>(
-          stream: DatabaseService(uid: user.uid).userNgosAddressData,
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) return Loading();
-            UserNGOAddress addressData = snapshot.data;
-            return SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Container(
-                    child: Column(
+        child: StreamBuilder<UserNGOAddress>(
+            stream: DatabaseService(uid: user.uid).userNgosAddressData,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) return Loading();
+              UserNGOAddress addressData = snapshot.data;
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Row(
                       children: <Widget>[
-                        InkWell(
-                          child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: FittedBox(
-                                child: _decideImageView(),
-                                fit: BoxFit.fill,
-                              )),
-                          onTap: () {
-                            _showChoiceDialog(context);
-                          },
+                        Padding(
+                          padding: EdgeInsets.only(top: res.setHeight(30.0), left: res.setWidth(3.0)),
+                          child: GestureDetector(
+                            child: Icon(Icons.arrow_back, color: Colors.white, size: res.setFontSize(28.0)),
+                            onTap:() {
+                              Navigator.pop(context);
+                            }
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  Card(
-                    elevation: 5,
-                    margin: EdgeInsets.all(10.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
+                    SizedBox(height: res.setHeight(10.0)),
+                    Container(
+                      child: Column(
+                        children: <Widget>[
+                          InkWell(
+                            child: Container(
+                                width: res.screenWidth,
+                                child: FittedBox(
+                                  child: _decideImageView(),
+                                  fit: BoxFit.fill,
+                                )),
+                            onTap: () {
+                              _showChoiceDialog(context);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                    child: Container(
-                      padding: EdgeInsets.all(20.0),
-                      child: Form(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: <Widget>[
-                            TextFormField(
-                              onChanged: (val) {
-                                setState(() => productName = val);
-                              },
-                              decoration: textInputDecoration.copyWith(
-                                hintText: 'Item Name',
-                                labelText: 'Item Name',
-                                labelStyle: TextStyle(color: Colors.grey),
-                              ),
-                            ),
-                            SizedBox(height: response.setHeight(10.0)),
-                            TextFormField(
-                              keyboardType: TextInputType.multiline,
-                              onChanged: (val) {
-                                setState(() => productDesc = val);
-                              },
-                              maxLines: null,
-                              decoration: textInputDecoration.copyWith(
-                                hintText: 'Item Description',
-                                labelText: 'Item Description',
-                                labelStyle: TextStyle(color: Colors.grey),
-                              ),
-                            ),
-                            SizedBox(height: response.setHeight(10.0)),
-                            TextFormField(
-                              keyboardType: TextInputType.number,
-                              onChanged: (val) {
-                                setState(() => count = int.parse(val));
-                              },
-                              decoration: textInputDecoration.copyWith(
-                                hintText: 'Serves(No.of Persons)',
-                                labelText: 'Serves(No.of Persons)',
-                                labelStyle: TextStyle(color: Colors.grey),
-                              ),
-                            ),
-                            SizedBox(height: response.setHeight(10.0)),
-                            RaisedButton(
-                                color: Color.fromRGBO(100, 120, 251, 1),
-                                child: Text(
-                                  'Save Details',
-                                  style: TextStyle(color: Colors.white),
+                    SizedBox(height: res.setHeight(5.0)),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: res.setWidth(8.0)),
+                      child: Card(
+                        elevation: 5,
+                        margin: EdgeInsets.all(res.setFontSize(10.0)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(res.setFontSize(30.0)),
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.all(res.setFontSize(20.0)),
+                          child: Form(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: <Widget>[
+                                TextFormField(
+                                  onChanged: (val) {
+                                    setState(() => productName = val);
+                                  },
+                                  decoration: textInputDecoration.copyWith(
+                                    hintText: 'Item Name',
+                                    labelText: 'Item Name',
+                                    labelStyle: TextStyle(color: Colors.grey),
+                                  ),
                                 ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
+                                SizedBox(height: res.setHeight(10.0)),
+                                TextFormField(
+                                  keyboardType: TextInputType.multiline,
+                                  onChanged: (val) {
+                                    setState(() => productDesc = val);
+                                  },
+                                  maxLines: null,
+                                  decoration: textInputDecoration.copyWith(
+                                    hintText: 'Item Description',
+                                    labelText: 'Item Description',
+                                    labelStyle: TextStyle(color: Colors.grey),
+                                  ),
                                 ),
-                                onPressed: () async {
-                                  DateTime defaultBestBefore = DateTime.now().add(Duration(hours: 24));
-                                  var foodCount = await DatabaseService().getFoodCount();
-                                  await DatabaseService().setFoodData('${foodCount['count'] + 1}', productName, user.email, addressData.latitude, addressData.longitude, count, Timestamp.now(), Timestamp.fromDate(defaultBestBefore), false, '', url);
-                                  await DatabaseService().updateFoodCount(foodCount['count'] + 1);
-                                  Navigator.pop(context);
-                                }),
-                          ],
+                                SizedBox(height: res.setHeight(10.0)),
+                                TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  onChanged: (val) {
+                                    setState(() => count = int.parse(val));
+                                  },
+                                  decoration: textInputDecoration.copyWith(
+                                    hintText: 'Serves(No.of Persons)',
+                                    labelText: 'Serves(No.of Persons)',
+                                    labelStyle: TextStyle(color: Colors.grey),
+                                  ),
+                                ),
+                                SizedBox(height: res.setHeight(10.0)),
+                                RaisedButton(
+                                    color: Color.fromRGBO(100, 120, 251, 1),
+                                    child: Text(
+                                      'Save Details',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                    ),
+                                    onPressed: () async {
+                                      DateTime defaultBestBefore = DateTime.now().add(Duration(hours: 24));
+                                      var foodCount = await DatabaseService().getFoodCount();
+                                      await DatabaseService().setFoodData('${foodCount['count'] + 1}', productName, user.email, addressData.latitude, addressData.longitude, count, Timestamp.now(), Timestamp.fromDate(defaultBestBefore), false, '', url);
+                                      await DatabaseService().updateFoodCount(foodCount['count'] + 1);
+                                      Navigator.pop(context);
+                                    }),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          }),
+                  ],
+                ),
+              );
+            })
+      )
     );
   }
 }
