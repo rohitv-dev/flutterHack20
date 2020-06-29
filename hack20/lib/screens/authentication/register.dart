@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hack20/services/auth.dart';
 import 'package:hack20/shared/loading.dart';
-import 'package:hack20/shared/textDecoration.dart';
 import 'package:response/response.dart';
 
 class Register extends StatefulWidget {
@@ -38,7 +37,7 @@ class _RegisterState extends State<Register> {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      height: response.setHeight(215.0),
+                      height: response.setHeight(190.0),
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage('assets/background.png'),
@@ -134,7 +133,7 @@ class _RegisterState extends State<Register> {
                             child: Center(
                                 child: FlatButton(
                                   child: Text(
-                                    "Register",
+                                    "Register as User",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold),
@@ -155,7 +154,56 @@ class _RegisterState extends State<Register> {
                                       setState(() {
                                         loading = true;
                                       });
-                                      dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+                                      dynamic result = await _auth.registerWithEmailAndPassword(email, password, 'USER');
+                                      if (result == null) {
+                                        setState(() {
+                                          loading = false;
+                                          warningText = 'Could not register with those credentials';
+                                        });
+                                      }
+                                    }
+                                  },
+                                )
+                            ),
+                          ),
+                          SizedBox(height: response.setHeight(5.0)),
+                          Container(
+                              child: Text('or', style: TextStyle(color: Color.fromRGBO(90, 100, 251, 1), fontSize: response.setFontSize(15.0)))
+                          ),
+                          SizedBox(height: response.setHeight(5.0)),
+                          Container(
+                            height: response.setHeight(46.0),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(response.setFontSize(10.0)),
+                                gradient: LinearGradient(colors: [
+                                  Color.fromRGBO(99, 107, 255, 1),
+                                  Color.fromRGBO(130, 136, 255, 0.9),
+                                ])),
+                            child: Center(
+                                child: FlatButton(
+                                  child: Text(
+                                    "Register as NGO",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  onPressed: () async {
+                                    email = emailController.text.replaceAll(' ', '');
+                                    password = passwordController.text.replaceAll(' ', '');
+                                    confirmPassword = confirmPasswordController.text.replaceAll(' ', '');
+                                    if (password.length < 6) {
+                                      setState(() {
+                                        warningText = 'Password should contain 6+ characters';
+                                      });
+                                    } else if (password != confirmPassword) {
+                                      setState(() {
+                                        warningText = 'Passwords do not match';
+                                      });
+                                    } else {
+                                      setState(() {
+                                        loading = true;
+                                      });
+                                      dynamic result = await _auth.registerWithEmailAndPassword(email, password, 'NGO');
                                       if (result == null) {
                                         setState(() {
                                           loading = false;
