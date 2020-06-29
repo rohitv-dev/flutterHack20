@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:hack20/models/foodModel.dart';
@@ -35,65 +36,91 @@ class _UserFoodHistoryState extends State<UserFoodHistory> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<Food> foodData = snapshot.data;
-          return ListView.builder(
-            itemCount: foodData.length,
-            itemBuilder: (context, index) {
-              return AnimationConfiguration.staggeredList(
-                  position: index,
-                  duration: Duration(milliseconds: 300),
-                  child: SlideAnimation(
-                    verticalOffset: 50.0,
-                    child: FadeInAnimation(
-                        child: Container(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: Card(
-                                child: Row(
-                                  children: <Widget>[
-                                    Container(
-                                        width: 100, height: 100,
-                                        child: GestureDetector(
-                                          child: Image.network(foodData[index].imageUrl),
-                                          onTap: () {
-                                            zoomImage(foodData[index].imageUrl);
-                                          },
-                                        )
-                                    ),
-                                    Container(
-                                        padding: EdgeInsets.only(top: 10),
-                                        height: 100,
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Text(foodData[index].name, style: TextStyle(fontWeight: FontWeight.w600)),
-                                            SizedBox(height: 3),
-                                            Row(
+          return ListView(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(top: 30, left: 15),
+                child: Text('User History', style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white, letterSpacing: 3))
+              ),
+              SizedBox(height: 5),
+              Divider(indent: 18, endIndent: 18, thickness: 1, height: 20, color: Colors.white),
+              SizedBox(height: 5),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: foodData.length,
+                itemBuilder: (context, index) {
+                  return AnimationConfiguration.staggeredList(
+                      position: index,
+                      duration: Duration(milliseconds: 300),
+                      child: SlideAnimation(
+                          verticalOffset: 50.0,
+                          child: FadeInAnimation(
+                              child: Container(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 10),
+                                    child: Container(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Container(
+                                              margin: EdgeInsets.symmetric(vertical: 16.0, horizontal: 5.0),
+                                            child: Stack(
                                               children: <Widget>[
-                                                Text('Quantity:', style: TextStyle(fontWeight: FontWeight.w500)),
-                                                SizedBox(width: 3),
-                                                Text('${foodData[index].quantity}')
-                                              ],
-                                            ),
-                                            Row(
-                                              children: <Widget>[
-                                                Text('Date & Time: ', style: TextStyle(fontWeight: FontWeight.w500)),
-                                                SizedBox(width: 3),
-                                                Text(getDateAndTime(foodData[index].notifiedTime))
+                                                Container(
+                                                  height: 124,
+                                                  width: 400,
+                                                  margin: EdgeInsets.only(left: 46),
+                                                  decoration: BoxDecoration(
+                                                    color: Color.fromRGBO(150, 170, 255, 0.9),
+                                                    shape: BoxShape.rectangle,
+                                                    borderRadius: BorderRadius.circular(8.0),
+                                                    boxShadow: [BoxShadow(color: Color.fromRGBO(100, 120, 255, 0.5), blurRadius: 10, offset: Offset(0, 10))]
+                                                  ),
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(left: 35.0, top: 10.0),
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: <Widget>[
+                                                        Row(
+                                                          children: <Widget>[
+                                                            Text(foodData[index].name, style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.w800, letterSpacing: 2)),
+                                                            SizedBox(width: 10),
+                                                            Text('x ${foodData[index].quantity}', style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.w700))
+                                                          ],
+                                                        ),
+                                                        SizedBox(height: 5),
+                                                        foodData[index].hasBeenPickedUp ? Text('Picked up by ${foodData[index].pickedBy}', style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w400)) :
+                                                        Text('Not yet picked up', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400)),
+                                                        SizedBox(height: 3),
+                                                        Text('${getDateAndTime(foodData[index].notifiedTime)}', style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w400))
+                                                      ],
+                                                    ),
+                                                  )
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.symmetric(vertical: 16.0),
+                                                  alignment: FractionalOffset.centerLeft,
+                                                  child: Container(
+                                                    height: 92, width: 92,
+                                                      child: GestureDetector(
+                                                        child: Image.network(foodData[index].imageUrl),
+                                                        onTap: () {zoomImage(foodData[index].imageUrl);},
+                                                      )
+                                                  )
+                                                )
                                               ],
                                             )
-                                          ],
-                                        )
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
-                        )
-                    )
-                  )
-              );
-            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                              )
+                          )
+                      )
+                  );
+                },
+              )
+            ],
           );
         } else {return Loading();}
       }

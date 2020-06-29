@@ -102,6 +102,14 @@ class DatabaseService {
     });
   }
 
+  Future foodPickedUp(String id, bool hasBeenPickedUp, String pickedBy, Timestamp notifiedTime) async {
+    return _foodCollection.document('food' + id.padLeft(4, '0')).updateData({
+      'hasBeenPickedUp': hasBeenPickedUp,
+      'pickedBy': pickedBy,
+      'notifiedTime': notifiedTime
+    });
+  }
+
   List<Food> _foodListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Food(

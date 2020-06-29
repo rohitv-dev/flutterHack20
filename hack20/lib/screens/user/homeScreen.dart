@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hack20/screens/user/FoodRegisterScreen.dart';
 import 'package:hack20/screens/user/profileScreen.dart';
 import 'package:hack20/screens/user/userFoodHistory.dart';
-import 'package:hack20/services/auth.dart';
+import 'package:response/response.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -14,11 +14,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex;
   String title = 'Home Page';
+  final response = ResponseUI.instance;
 
   @override
   void initState() {
     super.initState();
-    currentIndex = 0;
+    currentIndex = 1;
   }
 
   void changePage(int index) {
@@ -33,55 +34,57 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: Text(title),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Log Out'),
-              onPressed: () {
-                AuthService().signOut();
-              },
-            )
-          ],
-        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => FoodRegisterScreen()));
           },
-          child: Icon(Icons.add, color: Colors.black),
-          backgroundColor: Colors.white,
+          child: Icon(Icons.add),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        bottomNavigationBar: BubbleBottomBar(hasNotch: true, fabLocation: BubbleBottomBarFabLocation.end, opacity: 0.2, currentIndex: currentIndex, onTap: changePage, borderRadius: BorderRadius.vertical(top: Radius.circular(16)), elevation: 8.0, items: <BubbleBottomBarItem>[
+        bottomNavigationBar: BubbleBottomBar(
+            hasNotch: true, fabLocation: BubbleBottomBarFabLocation.end, opacity: 0.2, currentIndex: currentIndex, onTap: changePage, borderRadius: BorderRadius.vertical(top: Radius.circular(16)), elevation: 8.0,
+            items: <BubbleBottomBarItem>[
           BubbleBottomBarItem(
-            backgroundColor: Colors.red,
-            icon: Icon(Icons.dashboard, color: Colors.black),
+            backgroundColor: Color.fromRGBO(80, 90, 255, 1),
+            icon: Icon(Icons.dashboard, color: Color.fromRGBO(50, 60, 255, 1)),
             activeIcon: Icon(
               Icons.dashboard,
-              color: Colors.red,
+              color: Color.fromRGBO(50, 60, 255, 1),
             ),
             title: Text('Home'),
           ),
           BubbleBottomBarItem(
-            backgroundColor: Colors.red,
-            icon: Icon(Icons.history, color: Colors.black),
+            backgroundColor: Color.fromRGBO(80, 90, 255, 1),
+            icon: Icon(Icons.history, color: Color.fromRGBO(50, 60, 255, 1)),
             activeIcon: Icon(
               Icons.history,
-              color: Colors.red,
+              color: Color.fromRGBO(50, 60, 255, 1),
             ),
             title: Text('History'),
           ),
           BubbleBottomBarItem(
-            backgroundColor: Colors.red,
-            icon: Icon(Icons.account_circle, color: Colors.black),
+            backgroundColor: Color.fromRGBO(80, 90, 255, 1),
+            icon: Icon(Icons.account_circle, color: Color.fromRGBO(50, 60, 255, 1)),
             activeIcon: Icon(
               Icons.account_circle,
-              color: Colors.red,
+              color: Color.fromRGBO(50, 60, 255, 1),
             ),
             title: Text('Settings'),
           )
         ]),
-        body: _pageChange());
+        body: Container(
+            width: response.screenWidth,
+            height: response.screenHeight,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [Color.fromRGBO(99, 107, 255, 1), Color.fromRGBO(130, 136, 255, 0.9)]
+              ),
+            ),
+          child: _pageChange()
+        )
+    );
   }
 
   _pageChange() {
@@ -90,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return Container(child: Center(child: Text('Home Screen')));
         break;
       case 1:
-        return Container(child: Center(child: Text('History')));
+        return UserFoodHistory();
         break;
       case 2:
         return ProfileScreen();
