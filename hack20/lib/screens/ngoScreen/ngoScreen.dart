@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hack20/models/userModel.dart';
 import 'package:hack20/screens/ngoScreen/ngoAvailableFood.dart';
 import 'package:hack20/screens/ngoScreen/ngoFoodHistory.dart';
+import 'package:hack20/screens/user/profileScreen.dart';
 import 'package:hack20/services/auth.dart';
 import 'package:hack20/services/database.dart';
 import 'package:hack20/shared/functions/displayToast.dart';
@@ -109,9 +110,7 @@ class _NgoScreenState extends State<NgoScreen> {
         return NGOFoodHistory();
         break;
       case 2:
-        return Container(
-            child: Center(child: Text('Profile'))
-        );
+        return ProfileScreen();
         break;
     }
   }

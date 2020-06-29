@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hack20/models/foodModel.dart';
 import 'package:hack20/models/sharedModel.dart';
@@ -22,6 +24,7 @@ class _NGOAvailableFoodState extends State<NGOAvailableFood> {
       builder: (context, adSnap) {
         if (adSnap.hasData) {
           UserNGOAddress addressData = adSnap.data;
+          if (addressData.latitude == 0.0) return Center(child: Text('Please add an address'));
           return StreamBuilder(
               stream: DatabaseService().pendingFood,
               builder: (context, foodSnap) {
@@ -31,6 +34,7 @@ class _NGOAvailableFoodState extends State<NGOAvailableFood> {
                       future: getDistance(addressData, foodData),
                       builder: (context, distance) {
                         if (distance.connectionState == ConnectionState.done) {
+                          print(distance);
                           return ListView.builder(
                             itemCount: foodData.length,
                             itemBuilder: (context, index) {
@@ -50,8 +54,8 @@ class _NGOAvailableFoodState extends State<NGOAvailableFood> {
     );
   }
 
-  getDistance(UserNGOAddress addressData, List<Food> foodData) async {
-    await APICall(addressData: addressData, foodData: foodData).callDistanceAPI();
-    return readItem('ngoDis');
+  Future getDistance(UserNGOAddress addressData, List<Food> foodData) async {
+    await callDistanceAPI(addressData, foodData);
+    return json.decode(await readItem('ngoDis'));
   }
 }

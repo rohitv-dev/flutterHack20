@@ -71,7 +71,7 @@ class _AddressEditState extends State<AddressEdit> {
     User user = Provider.of<User>(context);
     _panelHeightOpen = MediaQuery.of(context).size.height * .60;
 
-    Widget updateAddressForm() {
+    Widget updateAddressForm(UserNGOAddress addressData) {
       return Column(children: [
         Text(
           'Update $_name Address',
@@ -82,8 +82,8 @@ class _AddressEditState extends State<AddressEdit> {
           width: 270,
           child: TextFormField(
             enabled: _nameFieldEnable,
-            initialValue: _name,
-            decoration: textInputDecoration.copyWith(hintText: 'Name'),
+            initialValue: _isChecked ? _name : addressData.name,
+            decoration: textInputDecoration.copyWith(hintText: 'Name', labelText: 'Name'),
             validator: (val) => val.isEmpty ? 'Please enter a name' : null,
             onChanged: (val) => setState(() => _name = val),
           ),
@@ -92,8 +92,8 @@ class _AddressEditState extends State<AddressEdit> {
         SizedBox(
           width: 270,
           child: TextFormField(
-            initialValue: _doorNo,
-            decoration: textInputDecoration.copyWith(hintText: 'Door No'),
+            initialValue: _isChecked ? _doorNo : addressData.doorNo,
+            decoration: textInputDecoration.copyWith(hintText: 'Door No', labelText: 'Door No'),
             validator: (val) => val.isEmpty ? 'Please enter a Door No' : null,
             onChanged: (val) => setState(() => _doorNo = val),
           ),
@@ -102,9 +102,9 @@ class _AddressEditState extends State<AddressEdit> {
         SizedBox(
           width: 270,
           child: TextFormField(
-            initialValue: _floorNo,
+            initialValue: _isChecked ? _floorNo : addressData.floorNo,
             keyboardType: TextInputType.number,
-            decoration: textInputDecoration.copyWith(hintText: 'Floor No'),
+            decoration: textInputDecoration.copyWith(hintText: 'Floor No', labelText: 'Floor No'),
             validator: (val) => val.isEmpty ? 'Please enter the Floor No' : null,
             onChanged: (val) => setState(() => _floorNo = val),
           ),
@@ -113,8 +113,8 @@ class _AddressEditState extends State<AddressEdit> {
         SizedBox(
           width: 270,
           child: TextFormField(
-            initialValue: _address,
-            decoration: textInputDecoration.copyWith(hintText: 'Address'),
+            initialValue: _isChecked ? _address : addressData.addressLine,
+            decoration: textInputDecoration.copyWith(hintText: 'Address', labelText: 'Address'),
             validator: (val) => val.isEmpty ? 'Please enter address line' : null,
             onChanged: (val) => setState(() => _address = val),
           ),
@@ -123,8 +123,8 @@ class _AddressEditState extends State<AddressEdit> {
         SizedBox(
           width: 270,
           child: TextFormField(
-            initialValue: _city,
-            decoration: textInputDecoration.copyWith(hintText: 'City'),
+            initialValue: _isChecked ? _city : addressData.city,
+            decoration: textInputDecoration.copyWith(hintText: 'City', labelText: 'City'),
             validator: (val) => val.isEmpty ? 'Please enter the city' : null,
             onChanged: (val) => setState(() => _city = val),
           ),
@@ -133,8 +133,8 @@ class _AddressEditState extends State<AddressEdit> {
         SizedBox(
           width: 270,
           child: TextFormField(
-            initialValue: _pinCode,
-            decoration: textInputDecoration.copyWith(hintText: 'Pin Code'),
+            initialValue: _isChecked ? _pinCode : addressData.pinCode,
+            decoration: textInputDecoration.copyWith(hintText: 'Pin Code', labelText: 'Pin Code'),
             validator: (val) => val.isEmpty ? 'Please enter the pincode' : null,
             onChanged: (val) => setState(() => _pinCode = val),
           ),
@@ -161,43 +161,45 @@ class _AddressEditState extends State<AddressEdit> {
       ]);
     }
 
-    void _showUpdatePanel() {
+    void _showUpdatePanel(UserNGOAddress addressData) {
       showDialog(
         context: context,
         builder: (context) {
-          return Dialog(
-            insetAnimationDuration: Duration(milliseconds: 1000),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-                side: BorderSide(
-                  color: Colors.grey[800],
-                  width: 3,
-                )),
-            elevation: 5.0,
-            backgroundColor: Colors.transparent,
-            child: Stack(
-              overflow: Overflow.visible,
-              children: <Widget>[
-                SizedBox(
-                  height: 550,
-                  width: 350,
-                  child: Container(
-                    decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(20)),
-                    padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
-                    child: Form(
-                      key: _formKey,
-                      child: Container(child: updateAddressForm()),
+          return SingleChildScrollView(
+            child: Dialog(
+              insetAnimationDuration: Duration(milliseconds: 1000),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  side: BorderSide(
+                    color: Colors.grey[800],
+                    width: 3,
+                  )),
+              elevation: 5.0,
+              backgroundColor: Colors.transparent,
+              child: Stack(
+                overflow: Overflow.visible,
+                children: <Widget>[
+                  SizedBox(
+                    height: 550,
+                    width: 350,
+                    child: Container(
+                      decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(20)),
+                      padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+                      child: Form(
+                        key: _formKey,
+                        child: Container(child: updateAddressForm(addressData)),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },
       );
     }
 
-    Widget _panel(ScrollController sc, User user) {
+    Widget _panel(ScrollController sc, User user, UserNGOAddress addressData) {
       return MediaQuery.removePadding(
           context: context,
           removeTop: true,
@@ -230,7 +232,7 @@ class _AddressEditState extends State<AddressEdit> {
                         children: <Widget>[
                           GestureDetector(
                             onTap: () {
-                              _showUpdatePanel();
+                              _showUpdatePanel(addressData);
                             },
                             child: Icon(
                               Icons.edit,
@@ -252,7 +254,7 @@ class _AddressEditState extends State<AddressEdit> {
                               ),
                               Flexible(
                                 child: Text(
-                                  (_name == '.' ? 'Your Address' : _name),
+                                  _isChecked ? _name : (_name == '.' ? addressData.name : _name),
                                   style: TextStyle(),
                                 ),
                               ),
@@ -273,7 +275,7 @@ class _AddressEditState extends State<AddressEdit> {
                               ),
                               Flexible(
                                 child: Text(
-                                  (_doorNo == '.' ? '.' : _doorNo),
+                                  _isChecked ? _doorNo : (_doorNo == '.' ? addressData.doorNo : _doorNo),
                                   style: TextStyle(),
                                 ),
                               ),
@@ -294,7 +296,7 @@ class _AddressEditState extends State<AddressEdit> {
                               ),
                               Flexible(
                                 child: Text(
-                                  (_floorNo == '.' ? '.' : _floorNo),
+                                  _isChecked ? _floorNo : (_floorNo == '.' ? addressData.floorNo : _floorNo),
                                   style: TextStyle(),
                                 ),
                               ),
@@ -315,7 +317,7 @@ class _AddressEditState extends State<AddressEdit> {
                               ),
                               Flexible(
                                 child: Text(
-                                  (_address == '.' ? '.' : _address),
+                                  _isChecked ? _address : (_address == '.' ? addressData.addressLine : _address),
                                   style: TextStyle(),
                                 ),
                               ),
@@ -336,7 +338,7 @@ class _AddressEditState extends State<AddressEdit> {
                               ),
                               Flexible(
                                 child: Text(
-                                  (_city == '.' ? '.' : _city),
+                                  _isChecked ? _city : (_city == '.' ? addressData.city : _city),
                                   style: TextStyle(),
                                 ),
                               ),
@@ -357,7 +359,7 @@ class _AddressEditState extends State<AddressEdit> {
                               ),
                               Flexible(
                                 child: Text(
-                                  (_pinCode == '.' ? '.' : _pinCode),
+                                  _isChecked ? _pinCode : (_pinCode == '.' ? addressData.pinCode : _pinCode),
                                   style: TextStyle(),
                                 ),
                               ),
@@ -382,6 +384,10 @@ class _AddressEditState extends State<AddressEdit> {
                         ),
                         onPressed: () async {
                           if (_isChecked) {
+                            await DatabaseService(uid: user.uid).updateAddressData(
+                                _name, _doorNo, _floorNo, _address, _city, _pinCode, _lastMapPosition.latitude, _lastMapPosition.longitude);
+                            showLongToast('Address updated', 2);
+                            Navigator.pop(context);
                           } else {
                             showLongToast('Kindly click the tick button', 2);
                           }
@@ -466,7 +472,7 @@ class _AddressEditState extends State<AddressEdit> {
                    defaultPanelState: PanelState.CLOSED,
                    parallaxOffset: .5,
                    body: _body(),
-                   panelBuilder: (sc) => _panel(sc, user),
+                   panelBuilder: (sc) => _panel(sc, user, snapshot.data),
                    borderRadius: BorderRadius.only(topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0)),
                    onPanelSlide: (double pos) => setState(() {
                      _fabHeight = pos * (_panelHeightOpen - _panelHeightClosed) + _closedFabHeight;
@@ -486,12 +492,12 @@ class _AddressEditState extends State<AddressEdit> {
 
                        final coordinates = new Coordinates(_lastMapPosition.latitude, _lastMapPosition.longitude);
                        var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
-                       var addressData = addresses.first;
+                       var data = addresses.first;
                        setState(() {
-                         _doorNo = addressData.featureName;
-                         _address = addressData.thoroughfare ?? '' + ',' + addressData.subLocality ?? '';
-                         _city = addressData.locality;
-                         _pinCode = addressData.postalCode;
+                         _doorNo = data.featureName;
+                         _address = data.thoroughfare ?? '' + ',' + data.subLocality ?? '';
+                         _city = data.locality;
+                         _pinCode = data.postalCode;
                        });
 
                        setState(() {
