@@ -113,10 +113,12 @@ class _NGOFoodHistoryState extends State<NGOFoodHistory> {
                                                                   margin: EdgeInsets.symmetric(vertical: 16.0),
                                                                   alignment: FractionalOffset.centerLeft,
                                                                   child: Container(
-                                                                      height: 92, width: 92,
-                                                                      child: GestureDetector(
-                                                                        child: Image.network(ngoFood[index].imageUrl),
-                                                                        onTap: () {zoomImage(ngoFood[index].imageUrl);},
+                                                                      height: 90, width: 75,
+                                                                      child: FittedBox(
+                                                                        child: GestureDetector(
+                                                                          child: Image.network(ngoFood[index].imageUrl),
+                                                                          onTap: () {zoomImage(ngoFood[index].imageUrl);},
+                                                                        ),
                                                                       )
                                                                   )
                                                               )
