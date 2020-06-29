@@ -49,6 +49,7 @@ class _UserFoodHistoryState extends State<UserFoodHistory> {
               ),
             ),
             child: ListView(
+              shrinkWrap: true,
               children: <Widget>[
                 Padding(
                     padding: EdgeInsets.only(top: 30, left: 15),
