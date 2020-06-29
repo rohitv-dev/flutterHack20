@@ -111,7 +111,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Column(
                 children: <Widget>[
                   Container(
-                    height: 210,
+                    height: 200,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
