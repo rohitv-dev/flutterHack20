@@ -5,6 +5,13 @@ class User {
   User({this.uid, this.email, this.isUserEmailVerified});
 }
 
+class UserProfile {
+  final String userName;
+  final String phoneNumber;
+
+  UserProfile({this.userName, this.phoneNumber});
+}
+
 class Role {
   final String email;
   final String role;
