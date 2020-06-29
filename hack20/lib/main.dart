@@ -4,6 +4,7 @@ import 'package:hack20/screens/wrapper.dart';
 import 'package:hack20/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:response/response.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,6 +13,12 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
+    SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]
+    );
     return MultiProvider(
         providers: [
           StreamProvider<User>.value(value: AuthService().user),
