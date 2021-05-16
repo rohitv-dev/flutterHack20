@@ -12,6 +12,7 @@ void main() async {
   await Firebase.initializeApp();
   runApp(MyApp());
 }
+//Refactor
 
 class MyApp extends StatelessWidget {
   @override
