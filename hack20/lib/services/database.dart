@@ -10,12 +10,27 @@ class DatabaseService {
 
   DatabaseService({this.uid, this.email, this.ngoName});
 
-  final CollectionReference _foodCollection = Firestore.instance.collection('food');
-  final CollectionReference _counterCollection = Firestore.instance.collection('counter');
-  final CollectionReference _usersNgosCollection = Firestore.instance.collection('usersNgos');
+  final CollectionReference _foodCollection =
+      FirebaseFirestore.instance.collection('food');
+  final CollectionReference _counterCollection =
+      FirebaseFirestore.instance.collection('counter');
+  final CollectionReference _usersNgosCollection =
+      FirebaseFirestore.instance.collection('usersNgos');
 
-  Future setAddressData(String docName, String doorNo, String floorNo, String address, String city, String pinCode, double lat, double lon) async {
-    return await _usersNgosCollection.document(uid).collection('address').document('address').setData({
+  Future setAddressData(
+      String docName,
+      String doorNo,
+      String floorNo,
+      String address,
+      String city,
+      String pinCode,
+      double lat,
+      double lon) async {
+    return await _usersNgosCollection
+        .doc(uid)
+        .collection('address')
+        .doc('address')
+        .set({
       'name': docName,
       'doorNo': doorNo,
       'floorNo': floorNo,
@@ -27,8 +42,20 @@ class DatabaseService {
     });
   }
 
-  Future updateAddressData(String docName, String doorNo, String floorNo, String address, String city, String pinCode, double lat, double lon) async {
-    return await _usersNgosCollection.document(uid).collection('address').document('address').updateData({
+  Future updateAddressData(
+      String docName,
+      String doorNo,
+      String floorNo,
+      String address,
+      String city,
+      String pinCode,
+      double lat,
+      double lon) async {
+    return await _usersNgosCollection
+        .doc(uid)
+        .collection('address')
+        .doc('address')
+        .update({
       'name': docName,
       'doorNo': doorNo,
       'floorNo': floorNo,
@@ -41,53 +68,58 @@ class DatabaseService {
   }
 
   Future setProfileData(String userName, String phoneNumber) async {
-    return await _usersNgosCollection.document(uid).setData({
-      'userName': userName,
-      'phoneNumber': phoneNumber
-    });
+    return await _usersNgosCollection
+        .doc(uid)
+        .set({'userName': userName, 'phoneNumber': phoneNumber});
   }
 
   Future updateProfileData(String userName, String phoneNumber) async {
-    return await _usersNgosCollection.document(uid).updateData({
-      'userName': userName,
-      'phoneNumber': phoneNumber
-    });
+    return await _usersNgosCollection
+        .doc(uid)
+        .update({'userName': userName, 'phoneNumber': phoneNumber});
   }
 
-
   UserNGOAddress _userAddressFromSnapshot(DocumentSnapshot snapshot) {
+    Map data = snapshot.data();
     return UserNGOAddress(
-      name: snapshot.data['name'] ?? '',
-      doorNo: snapshot.data['doorNo'] ?? '',
-      floorNo: snapshot.data['floorNo'] ?? '',
-      addressLine: snapshot.data['addressLine'] ?? '',
-      city: snapshot.data['city'] ?? '',
-      pinCode: snapshot.data['pincode'] ?? '',
-      latitude: snapshot.data['latitude'] ?? 12.837605,
-      longitude: snapshot.data['longitude'] ?? 80.205146,
+      name: data['name'] ?? '',
+      doorNo: data['doorNo'] ?? '',
+      floorNo: data['floorNo'] ?? '',
+      addressLine: data['addressLine'] ?? '',
+      city: data['city'] ?? '',
+      pinCode: data['pincode'] ?? '',
+      latitude: data['latitude'] ?? 12.837605,
+      longitude: data['longitude'] ?? 80.205146,
     );
   }
 
   UserProfile _userProfileFromSnapshot(DocumentSnapshot snapshot) {
+    Map data = snapshot.data();
     return UserProfile(
-      userName: snapshot.data['userName'],
-      phoneNumber: snapshot.data['phoneNumber']
-    );
+        userName: data['userName'], phoneNumber: data['phoneNumber']);
   }
 
   Future updateFoodCount(int count) async {
-    return await _counterCollection.document('foodId').setData({'count': count });
+    return await _counterCollection.doc('foodId').set({'count': count});
   }
 
   Future getFoodCount() async {
-    return await _counterCollection.document('foodId').snapshots().first;
+    return await _counterCollection.doc('foodId').snapshots().first;
   }
 
   Future setFoodData(
-      String id, String name, String email, double latitude, double longitude,
-      int quantity, Timestamp notifiedTime, Timestamp bestBeforeTime,
-      bool hasBeenPickedUp, String pickedBy, String imageUrl) async {
-    return _foodCollection.document('food' + id.padLeft(4, '0')).setData({
+      String id,
+      String name,
+      String email,
+      double latitude,
+      double longitude,
+      int quantity,
+      Timestamp notifiedTime,
+      Timestamp bestBeforeTime,
+      bool hasBeenPickedUp,
+      String pickedBy,
+      String imageUrl) async {
+    return _foodCollection.doc('food' + id.padLeft(4, '0')).set({
       'id': id,
       'name': name,
       'email': email,
@@ -102,8 +134,9 @@ class DatabaseService {
     });
   }
 
-  Future foodPickedUp(String id, bool hasBeenPickedUp, String pickedBy, Timestamp notifiedTime) async {
-    return _foodCollection.document('food' + id.padLeft(4, '0')).updateData({
+  Future foodPickedUp(String id, bool hasBeenPickedUp, String pickedBy,
+      Timestamp notifiedTime) async {
+    return _foodCollection.doc('food' + id.padLeft(4, '0')).update({
       'hasBeenPickedUp': hasBeenPickedUp,
       'pickedBy': pickedBy,
       'notifiedTime': notifiedTime
@@ -111,40 +144,57 @@ class DatabaseService {
   }
 
   List<Food> _foodListFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.documents.map((doc) {
+    return snapshot.docs.map((doc) {
+      Map data = doc.data();
       return Food(
-          id: doc.data['id'] ?? '',
-          name: doc.data['name'] ?? '',
-          email: doc.data['email'] ?? '',
-          latitude: doc.data['latitude'] ?? 12.837605,
-          longitude: doc.data['longitude'] ?? 80.205146,
-          quantity: doc.data['quantity'] ?? 0,
-          notifiedTime: doc.data['notifiedTime'] ?? Timestamp.now(),
-          bestBeforeTime: doc.data['bestBeforeTime'] ?? Timestamp.now(),
-          hasBeenPickedUp: doc.data['hasBeenPickedUp'] ?? false,
-          pickedBy: doc.data['pickedBy'] ?? '',
-          imageUrl: doc.data['imageUrl'] ?? ''
-      );
+          id: data['id'] ?? '',
+          name: data['name'] ?? '',
+          email: data['email'] ?? '',
+          latitude: data['latitude'] ?? 12.837605,
+          longitude: data['longitude'] ?? 80.205146,
+          quantity: data['quantity'] ?? 0,
+          notifiedTime: data['notifiedTime'] ?? Timestamp.now(),
+          bestBeforeTime: data['bestBeforeTime'] ?? Timestamp.now(),
+          hasBeenPickedUp: data['hasBeenPickedUp'] ?? false,
+          pickedBy: data['pickedBy'] ?? '',
+          imageUrl: data['imageUrl'] ?? '');
     }).toList();
   }
 
   Stream<List<Food>> get pendingFood {
-    return _foodCollection.where('hasBeenPickedUp', isEqualTo: false).snapshots().map(_foodListFromSnapshot);
+    return _foodCollection
+        .where('hasBeenPickedUp', isEqualTo: false)
+        .snapshots()
+        .map(_foodListFromSnapshot);
   }
 
   Stream<List<Food>> get userFoodHistory {
-    return _foodCollection.where('email', isEqualTo: email).snapshots().map(_foodListFromSnapshot);
+    return _foodCollection
+        .where('email', isEqualTo: email)
+        .snapshots()
+        .map(_foodListFromSnapshot);
   }
 
   Stream<List<Food>> get ngoFoodHistory {
-    return _foodCollection.where('pickedBy', isEqualTo: ngoName).snapshots().map(_foodListFromSnapshot);
+    return _foodCollection
+        .where('pickedBy', isEqualTo: ngoName)
+        .snapshots()
+        .map(_foodListFromSnapshot);
   }
 
   Stream<UserNGOAddress> get userNgosAddressData {
-    return _usersNgosCollection.document(uid).collection('address').document('address').snapshots().map(_userAddressFromSnapshot);
+    return _usersNgosCollection
+        .doc(uid)
+        .collection('address')
+        .doc('address')
+        .snapshots()
+        .map(_userAddressFromSnapshot);
   }
 
   Stream<UserProfile> get userProfileData {
-    return _usersNgosCollection.document(uid).snapshots().map(_userProfileFromSnapshot);
+    return _usersNgosCollection
+        .doc(uid)
+        .snapshots()
+        .map(_userProfileFromSnapshot);
   }
 }

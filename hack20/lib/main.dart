@@ -5,8 +5,11 @@ import 'package:hack20/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:response/response.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -17,11 +20,11 @@ class MyApp extends StatelessWidget {
       statusBarColor: Colors.transparent,
     ));
     SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]
-    );
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return MultiProvider(
         providers: [
-          StreamProvider<User>.value(value: AuthService().user),
+          StreamProvider<AppUser>.value(
+              initialData: null, value: AuthService().user),
         ],
         child: Response(
           originalScreenHeight: 759,
@@ -29,9 +32,8 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
-                primaryColor: Color.fromRGBO(100, 120, 251, 1),
-                accentColor: Color.fromRGBO(90, 100, 251, 1)
-              ),
+                  primaryColor: Color.fromRGBO(100, 120, 251, 1),
+                  accentColor: Color.fromRGBO(90, 100, 251, 1)),
               title: 'Hack 20 App',
               home: Wrapper()),
         ));

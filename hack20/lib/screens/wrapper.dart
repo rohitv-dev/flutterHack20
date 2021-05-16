@@ -12,22 +12,25 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     checkNetwork();
-    final user = Provider.of<User>(context);
+    final user = Provider.of<AppUser>(context);
     if (user == null) {
       return Authenticate();
     } else {
       return FutureBuilder(
-        future: checkLoginRole(user.email),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasData) {
-              if (snapshot.data == 'useraccess') return HomeScreen();
-              if (snapshot.data == 'ngoaccess') return NgoScreen();
-            } else {return Loading();}
-          } else {return Loading();}
-          return Loading();
-        }
-      );
+          future: checkLoginRole(user.email),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData) {
+                if (snapshot.data == 'useraccess') return HomeScreen();
+                if (snapshot.data == 'ngoaccess') return NgoScreen();
+              } else {
+                return Loading();
+              }
+            } else {
+              return Loading();
+            }
+            return Loading();
+          });
     }
   }
 

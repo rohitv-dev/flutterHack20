@@ -46,8 +46,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           },
                         ),
                         SizedBox(height: 20.0),
-                        RaisedButton(
-                          color: Colors.pink[400],
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.pink[400]),
+                          ),
                           child: Text('Submit',
                               style: TextStyle(color: Colors.white)),
                           onPressed: () async {
@@ -64,7 +67,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               }
                             }
                           },
-                        )
+                        ),
                       ],
                     ))));
   }

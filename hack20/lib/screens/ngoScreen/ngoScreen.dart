@@ -34,7 +34,7 @@ class _NgoScreenState extends State<NgoScreen> {
   @override
   Widget build(BuildContext context) {
     final response = ResponseUI.instance;
-    User user = Provider.of<User>(context);
+    AppUser user = Provider.of<AppUser>(context);
     addressCheck = DatabaseService(uid: user.uid).userNgosAddressData;
     return Scaffold(
         bottomNavigationBar: BubbleBottomBar(
@@ -48,7 +48,8 @@ class _NgoScreenState extends State<NgoScreen> {
             items: <BubbleBottomBarItem>[
               BubbleBottomBarItem(
                 backgroundColor: Color.fromRGBO(80, 90, 255, 1),
-                icon: Icon(Icons.dashboard, color: Color.fromRGBO(50, 60, 255, 1)),
+                icon: Icon(Icons.dashboard,
+                    color: Color.fromRGBO(50, 60, 255, 1)),
                 activeIcon: Icon(
                   Icons.dashboard,
                   color: Color.fromRGBO(50, 60, 255, 1),
@@ -57,7 +58,8 @@ class _NgoScreenState extends State<NgoScreen> {
               ),
               BubbleBottomBarItem(
                 backgroundColor: Color.fromRGBO(80, 90, 255, 1),
-                icon: Icon(Icons.history, color: Color.fromRGBO(50, 60, 255, 1)),
+                icon:
+                    Icon(Icons.history, color: Color.fromRGBO(50, 60, 255, 1)),
                 activeIcon: Icon(
                   Icons.history,
                   color: Color.fromRGBO(50, 60, 255, 1),
@@ -66,19 +68,16 @@ class _NgoScreenState extends State<NgoScreen> {
               ),
               BubbleBottomBarItem(
                 backgroundColor: Color.fromRGBO(80, 90, 255, 1),
-                icon: Icon(Icons.account_circle, color: Color.fromRGBO(50, 60, 255, 1)),
+                icon: Icon(Icons.account_circle,
+                    color: Color.fromRGBO(50, 60, 255, 1)),
                 activeIcon: Icon(
                   Icons.account_circle,
                   color: Color.fromRGBO(50, 60, 255, 1),
                 ),
                 title: Text('Settings'),
               )
-            ]
-        ),
-        body: Container(
-            child: _pageChange()
-    )
-    );
+            ]),
+        body: Container(child: _pageChange()));
   }
 
   _pageChange() {

@@ -19,7 +19,8 @@ class FoodRegisterScreen extends StatefulWidget {
   final String productDesc;
   final int count;
 
-  FoodRegisterScreen({this.url, this.productName, this.productDesc, this.count});
+  FoodRegisterScreen(
+      {this.url, this.productName, this.productDesc, this.count});
 
   @override
   _FoodRegisterScreenState createState() => _FoodRegisterScreenState();
@@ -39,21 +40,26 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
 
   _openGallery(BuildContext context) async {
     // ignore: deprecated_member_use
-    var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+    final picker = ImagePicker();
+    var pickedFile = await picker.getImage(source: ImageSource.gallery);
 
     this.setState(() {
-      imageFile = picture;
+      if (pickedFile != null) {
+        imageFile = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
     });
 
     Navigator.of(context).pop();
 
     String fileName = basename(imageFile.path);
 
-    StorageReference reference = storage.ref().child("productImages/$fileName");
+    Reference reference = storage.ref().child("productImages/$fileName");
 
-    StorageUploadTask uploadTask = reference.putFile(imageFile);
+    UploadTask uploadTask = reference.putFile(imageFile);
 
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    TaskSnapshot taskSnapshot = await uploadTask.snapshot;
 
     url = await taskSnapshot.ref.getDownloadURL();
 
@@ -62,20 +68,25 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
 
   _openCamera(BuildContext context) async {
     // ignore: deprecated_member_use
-    var picture = await ImagePicker.pickImage(source: ImageSource.camera);
+    final picker = ImagePicker();
+    var pickedFile = await picker.getImage(source: ImageSource.camera);
     this.setState(() {
-      imageFile = picture;
+      if (pickedFile != null) {
+        imageFile = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
     });
 
     Navigator.of(context).pop();
 
     String fileName = basename(imageFile.path);
 
-    StorageReference reference = storage.ref().child("productImages/$fileName");
+    Reference reference = storage.ref().child("productImages/$fileName");
 
-    StorageUploadTask uploadTask = reference.putFile(imageFile);
+    UploadTask uploadTask = reference.putFile(imageFile);
 
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    TaskSnapshot taskSnapshot = await uploadTask.snapshot;
 
     url = await taskSnapshot.ref.getDownloadURL();
 
@@ -123,14 +134,20 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    User user = Provider.of<User>(context);
+    AppUser user = Provider.of<AppUser>(context);
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
-              gradient: LinearGradient(begin: Alignment.topRight, end: Alignment.bottomLeft, colors: [Color.fromRGBO(99, 107, 255, 1), Color.fromRGBO(130, 136, 255, 0.9)]),
+              gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    Color.fromRGBO(99, 107, 255, 1),
+                    Color.fromRGBO(130, 136, 255, 0.9)
+                  ]),
             ),
             child: StreamBuilder<UserNGOAddress>(
                 stream: DatabaseService(uid: user.uid).userNgosAddressData,
@@ -144,9 +161,13 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                         Row(
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.only(top: res.setHeight(30.0), left: res.setWidth(3.0)),
+                              padding: EdgeInsets.only(
+                                  top: res.setHeight(30.0),
+                                  left: res.setWidth(3.0)),
                               child: GestureDetector(
-                                  child: Icon(Icons.arrow_back, color: Colors.white, size: res.setFontSize(28.0)),
+                                  child: Icon(Icons.arrow_back,
+                                      color: Colors.white,
+                                      size: res.setFontSize(28.0)),
                                   onTap: () {
                                     Navigator.pop(context);
                                   }),
@@ -160,9 +181,10 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                               InkWell(
                                 child: Container(
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20)
-                                    ),
-                                    width: MediaQuery.of(context).size.width*.9,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    width:
+                                        MediaQuery.of(context).size.width * .9,
                                     child: FittedBox(
                                       child: _decideImageView(),
                                       fit: BoxFit.fill,
@@ -176,18 +198,21 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                         ),
                         SizedBox(height: res.setHeight(5.0)),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: res.setWidth(8.0)),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: res.setWidth(8.0)),
                           child: Card(
                             elevation: 5,
                             margin: EdgeInsets.all(res.setFontSize(10.0)),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(res.setFontSize(30.0)),
+                              borderRadius:
+                                  BorderRadius.circular(res.setFontSize(30.0)),
                             ),
                             child: Container(
                               padding: EdgeInsets.all(res.setFontSize(20.0)),
                               child: Form(
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: <Widget>[
                                     TextFormField(
                                       onChanged: (val) {
@@ -196,7 +221,8 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                                       decoration: textInputDecoration.copyWith(
                                         hintText: 'Item Name',
                                         labelText: 'Item Name',
-                                        labelStyle: TextStyle(color: Colors.grey),
+                                        labelStyle:
+                                            TextStyle(color: Colors.grey),
                                       ),
                                     ),
                                     SizedBox(height: res.setHeight(10.0)),
@@ -209,7 +235,8 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                                       decoration: textInputDecoration.copyWith(
                                         hintText: 'Item Description',
                                         labelText: 'Item Description',
-                                        labelStyle: TextStyle(color: Colors.grey),
+                                        labelStyle:
+                                            TextStyle(color: Colors.grey),
                                       ),
                                     ),
                                     SizedBox(height: res.setHeight(10.0)),
@@ -221,7 +248,8 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                                       decoration: textInputDecoration.copyWith(
                                         hintText: 'Serves(No.of Persons)',
                                         labelText: 'Serves(No.of Persons)',
-                                        labelStyle: TextStyle(color: Colors.grey),
+                                        labelStyle:
+                                            TextStyle(color: Colors.grey),
                                       ),
                                     ),
                                     SizedBox(height: res.setHeight(10.0)),
@@ -232,13 +260,32 @@ class _FoodRegisterScreenState extends State<FoodRegisterScreen> {
                                           style: TextStyle(color: Colors.white),
                                         ),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(18.0),
+                                          borderRadius:
+                                              BorderRadius.circular(18.0),
                                         ),
                                         onPressed: () async {
-                                          DateTime defaultBestBefore = DateTime.now().add(Duration(hours: 24));
-                                          var foodCount = await DatabaseService().getFoodCount();
-                                          await DatabaseService().setFoodData('${foodCount['count'] + 1}', productName, user.email, addressData.latitude, addressData.longitude, count, Timestamp.now(), Timestamp.fromDate(defaultBestBefore), false, '', url);
-                                          await DatabaseService().updateFoodCount(foodCount['count'] + 1);
+                                          DateTime defaultBestBefore =
+                                              DateTime.now()
+                                                  .add(Duration(hours: 24));
+                                          var foodCount =
+                                              await DatabaseService()
+                                                  .getFoodCount();
+                                          await DatabaseService().setFoodData(
+                                              '${foodCount['count'] + 1}',
+                                              productName,
+                                              user.email,
+                                              addressData.latitude,
+                                              addressData.longitude,
+                                              count,
+                                              Timestamp.now(),
+                                              Timestamp.fromDate(
+                                                  defaultBestBefore),
+                                              false,
+                                              '',
+                                              url);
+                                          await DatabaseService()
+                                              .updateFoodCount(
+                                                  foodCount['count'] + 1);
                                           Navigator.pop(context);
                                         }),
                                   ],

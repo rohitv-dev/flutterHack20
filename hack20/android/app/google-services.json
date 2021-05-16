@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "543107689638",
-    "firebase_url": "https://hack20-d5c70.firebaseio.com",
-    "project_id": "hack20-d5c70",
-    "storage_bucket": "hack20-d5c70.appspot.com"
+    "project_number": "158293371278",
+    "project_id": "vivres-accord",
+    "storage_bucket": "vivres-accord.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:543107689638:android:77ec80e29f8a006a6cd867",
+        "mobilesdk_app_id": "1:158293371278:android:c8c9c0c2f1044f73525cdf",
         "android_client_info": {
-          "package_name": "com.hack20.foodpick"
+          "package_name": "com.ayani.vivresaccord"
         }
       },
       "oauth_client": [
         {
-          "client_id": "543107689638-v47nl5dmeguh5bjec9mbh3o1jumum4a5.apps.googleusercontent.com",
+          "client_id": "158293371278-cl1r53rtni90cmi8fkkfb7b8s2k6kr25.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDN5NyugyoK6F6RflPc4ZLa_nmM8akFRPc"
+          "current_key": "AIzaSyAih8HaZ0GpYbo4oMyJ32-jinlN1VPN2FM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "543107689638-v47nl5dmeguh5bjec9mbh3o1jumum4a5.apps.googleusercontent.com",
+              "client_id": "158293371278-cl1r53rtni90cmi8fkkfb7b8s2k6kr25.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

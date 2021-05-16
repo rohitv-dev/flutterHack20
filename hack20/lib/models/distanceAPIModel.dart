@@ -29,7 +29,7 @@ class Response {
         ? new MetaInfo.fromJson(json['metaInfo'])
         : null;
     if (json['matrixEntry'] != null) {
-      matrixEntry = new List<MatrixEntry>();
+      matrixEntry = [];
       json['matrixEntry'].forEach((v) {
         matrixEntry.add(new MatrixEntry.fromJson(v));
       });
@@ -57,10 +57,10 @@ class MetaInfo {
 
   MetaInfo(
       {this.timestamp,
-        this.mapVersion,
-        this.moduleVersion,
-        this.interfaceVersion,
-        this.availableMapVersion});
+      this.mapVersion,
+      this.moduleVersion,
+      this.interfaceVersion,
+      this.availableMapVersion});
 
   MetaInfo.fromJson(Map<String, dynamic> json) {
     timestamp = json['timestamp'];
@@ -92,7 +92,7 @@ class MatrixEntry {
     startIndex = json['startIndex'];
     destinationIndex = json['destinationIndex'];
     summary =
-    json['summary'] != null ? new Summary.fromJson(json['summary']) : null;
+        json['summary'] != null ? new Summary.fromJson(json['summary']) : null;
   }
 
   Map<String, dynamic> toJson() {

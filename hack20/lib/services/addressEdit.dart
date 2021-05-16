@@ -55,7 +55,9 @@ class _AddressEditState extends State<AddressEdit> {
 
   _toggleMapType() {
     setState(() {
-      _currentMapType = _currentMapType == MapType.normal ? MapType.satellite : MapType.normal;
+      _currentMapType = _currentMapType == MapType.normal
+          ? MapType.satellite
+          : MapType.normal;
     });
   }
 
@@ -68,7 +70,7 @@ class _AddressEditState extends State<AddressEdit> {
 
   @override
   Widget build(BuildContext context) {
-    User user = Provider.of<User>(context);
+    AppUser user = Provider.of<AppUser>(context);
     _panelHeightOpen = MediaQuery.of(context).size.height * .60;
 
     Widget updateAddressForm(UserNGOAddress addressData) {
@@ -83,7 +85,8 @@ class _AddressEditState extends State<AddressEdit> {
           child: TextFormField(
             enabled: _nameFieldEnable,
             initialValue: _isChecked ? _name : addressData.name,
-            decoration: textInputDecoration.copyWith(hintText: 'Name', labelText: 'Name'),
+            decoration: textInputDecoration.copyWith(
+                hintText: 'Name', labelText: 'Name'),
             validator: (val) => val.isEmpty ? 'Please enter a name' : null,
             onChanged: (val) => setState(() => _name = val),
           ),
@@ -93,7 +96,8 @@ class _AddressEditState extends State<AddressEdit> {
           width: 270,
           child: TextFormField(
             initialValue: _isChecked ? _doorNo : addressData.doorNo,
-            decoration: textInputDecoration.copyWith(hintText: 'Door No', labelText: 'Door No'),
+            decoration: textInputDecoration.copyWith(
+                hintText: 'Door No', labelText: 'Door No'),
             validator: (val) => val.isEmpty ? 'Please enter a Door No' : null,
             onChanged: (val) => setState(() => _doorNo = val),
           ),
@@ -104,8 +108,10 @@ class _AddressEditState extends State<AddressEdit> {
           child: TextFormField(
             initialValue: _isChecked ? _floorNo : addressData.floorNo,
             keyboardType: TextInputType.number,
-            decoration: textInputDecoration.copyWith(hintText: 'Floor No', labelText: 'Floor No'),
-            validator: (val) => val.isEmpty ? 'Please enter the Floor No' : null,
+            decoration: textInputDecoration.copyWith(
+                hintText: 'Floor No', labelText: 'Floor No'),
+            validator: (val) =>
+                val.isEmpty ? 'Please enter the Floor No' : null,
             onChanged: (val) => setState(() => _floorNo = val),
           ),
         ),
@@ -114,8 +120,10 @@ class _AddressEditState extends State<AddressEdit> {
           width: 270,
           child: TextFormField(
             initialValue: _isChecked ? _address : addressData.addressLine,
-            decoration: textInputDecoration.copyWith(hintText: 'Address', labelText: 'Address'),
-            validator: (val) => val.isEmpty ? 'Please enter address line' : null,
+            decoration: textInputDecoration.copyWith(
+                hintText: 'Address', labelText: 'Address'),
+            validator: (val) =>
+                val.isEmpty ? 'Please enter address line' : null,
             onChanged: (val) => setState(() => _address = val),
           ),
         ),
@@ -124,7 +132,8 @@ class _AddressEditState extends State<AddressEdit> {
           width: 270,
           child: TextFormField(
             initialValue: _isChecked ? _city : addressData.city,
-            decoration: textInputDecoration.copyWith(hintText: 'City', labelText: 'City'),
+            decoration: textInputDecoration.copyWith(
+                hintText: 'City', labelText: 'City'),
             validator: (val) => val.isEmpty ? 'Please enter the city' : null,
             onChanged: (val) => setState(() => _city = val),
           ),
@@ -134,7 +143,8 @@ class _AddressEditState extends State<AddressEdit> {
           width: 270,
           child: TextFormField(
             initialValue: _isChecked ? _pinCode : addressData.pinCode,
-            decoration: textInputDecoration.copyWith(hintText: 'Pin Code', labelText: 'Pin Code'),
+            decoration: textInputDecoration.copyWith(
+                hintText: 'Pin Code', labelText: 'Pin Code'),
             validator: (val) => val.isEmpty ? 'Please enter the pincode' : null,
             onChanged: (val) => setState(() => _pinCode = val),
           ),
@@ -183,8 +193,11 @@ class _AddressEditState extends State<AddressEdit> {
                     height: 550,
                     width: 350,
                     child: Container(
-                      decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(20)),
-                      padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+                      decoration: BoxDecoration(
+                          color: Colors.grey[100],
+                          borderRadius: BorderRadius.circular(20)),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 20.0, horizontal: 10.0),
                       child: Form(
                         key: _formKey,
                         child: Container(child: updateAddressForm(addressData)),
@@ -199,7 +212,8 @@ class _AddressEditState extends State<AddressEdit> {
       );
     }
 
-    Widget _panel(ScrollController sc, User user, UserNGOAddress addressData) {
+    Widget _panel(
+        ScrollController sc, AppUser user, UserNGOAddress addressData) {
       return MediaQuery.removePadding(
           context: context,
           removeTop: true,
@@ -216,7 +230,10 @@ class _AddressEditState extends State<AddressEdit> {
                     child: Container(
                       width: 30,
                       height: 5,
-                      decoration: BoxDecoration(color: Colors.grey[300], borderRadius: BorderRadius.all(Radius.circular(12.0))),
+                      decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(12.0))),
                     ),
                   ),
                   SizedBox(height: 20.0),
@@ -228,7 +245,8 @@ class _AddressEditState extends State<AddressEdit> {
                         flex: 1,
                         child: Text(
                           '    Address',
-                          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 18.0, fontWeight: FontWeight.bold),
                         ),
                       ),
                       Expanded(
@@ -246,7 +264,7 @@ class _AddressEditState extends State<AddressEdit> {
                           ),
                         ),
                       ),
-                      SizedBox(width:10.0),
+                      SizedBox(width: 10.0),
                     ],
                   ),
                   SizedBox(height: 20.0),
@@ -270,7 +288,11 @@ class _AddressEditState extends State<AddressEdit> {
                               ),
                               Flexible(
                                 child: Text(
-                                  _isChecked ? _name : (_name == '.' ? addressData.name : _name),
+                                  _isChecked
+                                      ? _name
+                                      : (_name == '.'
+                                          ? addressData.name
+                                          : _name),
                                   style: TextStyle(),
                                 ),
                               ),
@@ -291,7 +313,11 @@ class _AddressEditState extends State<AddressEdit> {
                               ),
                               Flexible(
                                 child: Text(
-                                  _isChecked ? _doorNo : (_doorNo == '.' ? addressData.doorNo : _doorNo),
+                                  _isChecked
+                                      ? _doorNo
+                                      : (_doorNo == '.'
+                                          ? addressData.doorNo
+                                          : _doorNo),
                                   style: TextStyle(),
                                 ),
                               ),
@@ -312,7 +338,11 @@ class _AddressEditState extends State<AddressEdit> {
                               ),
                               Flexible(
                                 child: Text(
-                                  _isChecked ? _floorNo : (_floorNo == '.' ? addressData.floorNo : _floorNo),
+                                  _isChecked
+                                      ? _floorNo
+                                      : (_floorNo == '.'
+                                          ? addressData.floorNo
+                                          : _floorNo),
                                   style: TextStyle(),
                                 ),
                               ),
@@ -333,7 +363,11 @@ class _AddressEditState extends State<AddressEdit> {
                               ),
                               Flexible(
                                 child: Text(
-                                  _isChecked ? _address : (_address == '.' ? addressData.addressLine : _address),
+                                  _isChecked
+                                      ? _address
+                                      : (_address == '.'
+                                          ? addressData.addressLine
+                                          : _address),
                                   style: TextStyle(),
                                 ),
                               ),
@@ -354,7 +388,11 @@ class _AddressEditState extends State<AddressEdit> {
                               ),
                               Flexible(
                                 child: Text(
-                                  _isChecked ? _city : (_city == '.' ? addressData.city : _city),
+                                  _isChecked
+                                      ? _city
+                                      : (_city == '.'
+                                          ? addressData.city
+                                          : _city),
                                   style: TextStyle(),
                                 ),
                               ),
@@ -375,7 +413,11 @@ class _AddressEditState extends State<AddressEdit> {
                               ),
                               Flexible(
                                 child: Text(
-                                  _isChecked ? _pinCode : (_pinCode == '.' ? addressData.pinCode : _pinCode),
+                                  _isChecked
+                                      ? _pinCode
+                                      : (_pinCode == '.'
+                                          ? addressData.pinCode
+                                          : _pinCode),
                                   style: TextStyle(),
                                 ),
                               ),
@@ -400,8 +442,16 @@ class _AddressEditState extends State<AddressEdit> {
                         ),
                         onPressed: () async {
                           if (_isChecked) {
-                            await DatabaseService(uid: user.uid).updateAddressData(
-                                _name, _doorNo, _floorNo, _address, _city, _pinCode, _lastMapPosition.latitude, _lastMapPosition.longitude);
+                            await DatabaseService(uid: user.uid)
+                                .updateAddressData(
+                                    _name,
+                                    _doorNo,
+                                    _floorNo,
+                                    _address,
+                                    _city,
+                                    _pinCode,
+                                    _lastMapPosition.latitude,
+                                    _lastMapPosition.longitude);
                             showLongToast('Address updated', 2);
                             Navigator.pop(context);
                           } else {
@@ -453,7 +503,8 @@ class _AddressEditState extends State<AddressEdit> {
     }
 
     _getLocation() async {
-      final curPosition = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      final curPosition = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
       setState(() {
         curLat = curPosition.latitude;
         curLon = curPosition.longitude;
@@ -471,118 +522,130 @@ class _AddressEditState extends State<AddressEdit> {
     }
 
     return Scaffold(
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
+        //resizeToAvoidBottomPadding: false,
         key: _scaffoldKey,
         body: StreamBuilder<UserNGOAddress>(
-          stream: DatabaseService(uid: user.uid).userNgosAddressData,
-          builder: (context, snapshot) {
-           if (snapshot.hasData) {
-             return Stack(
-               alignment: Alignment.topCenter,
-               children: <Widget>[
-                 SlidingUpPanel(
-                   isDraggable: _draggable,
-                   maxHeight: _panelHeightOpen,
-                   minHeight: _panelHeightClosed,
-                   parallaxEnabled: true,
-                   defaultPanelState: PanelState.CLOSED,
-                   parallaxOffset: .5,
-                   body: _body(),
-                   panelBuilder: (sc) => _panel(sc, user, snapshot.data),
-                   borderRadius: BorderRadius.only(topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0)),
-                   onPanelSlide: (double pos) => setState(() {
-                     _fabHeight = pos * (_panelHeightOpen - _panelHeightClosed) + _closedFabHeight;
-                   }),
-                 ),
-                 Positioned(
-                   right: 20.0,
-                   bottom: _fabHeight + 20,
-                   child: FloatingActionButton(
-                     child: Icon(
-                       Icons.check,
-                       color: Colors.black,
-                     ),
-                     onPressed: () async {
-                       lat = _lastMapPosition.latitude;
-                       lon = _lastMapPosition.longitude;
+            stream: DatabaseService(uid: user.uid).userNgosAddressData,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Stack(
+                  alignment: Alignment.topCenter,
+                  children: <Widget>[
+                    SlidingUpPanel(
+                      isDraggable: _draggable,
+                      maxHeight: _panelHeightOpen,
+                      minHeight: _panelHeightClosed,
+                      parallaxEnabled: true,
+                      defaultPanelState: PanelState.CLOSED,
+                      parallaxOffset: .5,
+                      body: _body(),
+                      panelBuilder: (sc) => _panel(sc, user, snapshot.data),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(18.0),
+                          topRight: Radius.circular(18.0)),
+                      onPanelSlide: (double pos) => setState(() {
+                        _fabHeight =
+                            pos * (_panelHeightOpen - _panelHeightClosed) +
+                                _closedFabHeight;
+                      }),
+                    ),
+                    Positioned(
+                      right: 20.0,
+                      bottom: _fabHeight + 20,
+                      child: FloatingActionButton(
+                        child: Icon(
+                          Icons.check,
+                          color: Colors.black,
+                        ),
+                        onPressed: () async {
+                          lat = _lastMapPosition.latitude;
+                          lon = _lastMapPosition.longitude;
 
-                       final coordinates = new Coordinates(_lastMapPosition.latitude, _lastMapPosition.longitude);
-                       var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
-                       var data = addresses.first;
-                       setState(() {
-                         _doorNo = data.featureName;
-                         _address = data.thoroughfare ?? '' + ',' + data.subLocality ?? '';
-                         _city = data.locality;
-                         _pinCode = data.postalCode;
-                       });
+                          final coordinates = new Coordinates(
+                              _lastMapPosition.latitude,
+                              _lastMapPosition.longitude);
+                          var addresses = await Geocoder.local
+                              .findAddressesFromCoordinates(coordinates);
+                          var data = addresses.first;
+                          setState(() {
+                            _doorNo = data.featureName;
+                            _address = data.thoroughfare ??
+                                '' + ',' + data.subLocality ??
+                                '';
+                            _city = data.locality;
+                            _pinCode = data.postalCode;
+                          });
 
-                       setState(() {
-                         _isChecked = true;
-                       });
-                     },
-                     backgroundColor: Colors.white,
-                   ),
-                 ),
-                 //Location Button
-                 Positioned(
-                   right: 20.0,
-                   bottom: _fabHeight + 90,
-                   child: FloatingActionButton(
-                     heroTag: 'location',
-                     child: Icon(
-                       Icons.my_location,
-                       color: Colors.black,
-                     ),
-                     onPressed: _gotoMyLocation,
-                     backgroundColor: Colors.white,
-                   ),
-                 ),
-                 Positioned(
-                     top: 0,
-                     child: ClipRRect(
-                         child: BackdropFilter(
-                             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                             child: Container(
-                               width: MediaQuery.of(context).size.width,
-                               height: MediaQuery.of(context).padding.top,
-                               color: Colors.transparent,
-                             )))),
-                 //Toggle Map
-                 Positioned(
-                   left: 20.0,
-                   bottom: _fabHeight + 20,
-                   child: FloatingActionButton(
-                     heroTag: 'togglemap',
-                     child: Icon(
-                       Icons.map,
-                       color: Colors.black,
-                     ),
-                     onPressed: () {
-                       _toggleMapType();
-                     },
-                     backgroundColor: Colors.white,
-                   ),
-                 ),
-                 //Back Button
-                 Positioned(
-                   top: 52.0,
-                   left: 20.0,
-                   child: FloatingActionButton(
-                     heroTag: 'back button',
-                     child: Icon(
-                       Icons.arrow_back,
-                       color: Colors.black,
-                     ),
-                     onPressed: () {
-                       Navigator.pop(context);
-                     },
-                     backgroundColor: Colors.white,
-                   ),
-                 ),
-               ],
-             );
-           } else {return Loading();}
-          }
-        ));
+                          setState(() {
+                            _isChecked = true;
+                          });
+                        },
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+                    //Location Button
+                    Positioned(
+                      right: 20.0,
+                      bottom: _fabHeight + 90,
+                      child: FloatingActionButton(
+                        heroTag: 'location',
+                        child: Icon(
+                          Icons.my_location,
+                          color: Colors.black,
+                        ),
+                        onPressed: _gotoMyLocation,
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+                    Positioned(
+                        top: 0,
+                        child: ClipRRect(
+                            child: BackdropFilter(
+                                filter:
+                                    ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).padding.top,
+                                  color: Colors.transparent,
+                                )))),
+                    //Toggle Map
+                    Positioned(
+                      left: 20.0,
+                      bottom: _fabHeight + 20,
+                      child: FloatingActionButton(
+                        heroTag: 'togglemap',
+                        child: Icon(
+                          Icons.map,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          _toggleMapType();
+                        },
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+                    //Back Button
+                    Positioned(
+                      top: 52.0,
+                      left: 20.0,
+                      child: FloatingActionButton(
+                        heroTag: 'back button',
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+                  ],
+                );
+              } else {
+                return Loading();
+              }
+            }));
   }
 }

@@ -6,24 +6,24 @@ import 'package:hack20/services/roleVerification.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  User _userFromFirebaseUser(FirebaseUser user) {
+  AppUser _userFromFirebaseUser(User user) {
     return user != null
-        ? User(
+        ? AppUser(
             uid: user.uid,
             email: user.email,
-            isUserEmailVerified: user.isEmailVerified)
+            isUserEmailVerified: user.emailVerified)
         : null;
   }
 
-  Stream<User> get user {
-    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
+  Stream<AppUser> get user {
+    return _auth.authStateChanges().map(_userFromFirebaseUser);
   }
 
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(
+      UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      FirebaseUser user = result.user;
+      User user = result.user;
       return _userFromFirebaseUser(user);
     } catch (error) {
       print(error.toString());
@@ -31,12 +31,15 @@ class AuthService {
     }
   }
 
-  Future registerWithEmailAndPassword(String email, String password, String role) async {
+  Future registerWithEmailAndPassword(
+      String email, String password, String role) async {
     try {
-      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      FirebaseUser user = result.user;
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      User user = result.user;
       await AccountVerification().addSingleRole(email, role);
-      await DatabaseService(uid: user.uid).setAddressData('address', '', '', '', '', '', 0.0, 0.0);
+      await DatabaseService(uid: user.uid)
+          .setAddressData('address', '', '', '', '', '', 0.0, 0.0);
       await DatabaseService(uid: user.uid).setProfileData('', '');
       return _userFromFirebaseUser(user);
     } catch (error) {
@@ -47,9 +50,9 @@ class AuthService {
 
   Future ngoRegisterWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.createUserWithEmailAndPassword(
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      FirebaseUser user = result.user;
+      User user = result.user;
       await AccountVerification().addSingleRole(email, 'NGO');
       return _userFromFirebaseUser(user);
     } catch (error) {

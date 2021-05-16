@@ -1,8 +1,8 @@
-class User {
+class AppUser {
   final String uid;
   final String email;
   final bool isUserEmailVerified;
-  User({this.uid, this.email, this.isUserEmailVerified});
+  AppUser({this.uid, this.email, this.isUserEmailVerified});
 }
 
 class UserProfile {
